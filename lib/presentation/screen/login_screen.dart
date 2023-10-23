@@ -1,7 +1,7 @@
 import 'dart:ui';
 
 import 'package:check_in_app/funtional.dart';
-import 'package:check_in_app/widget/button_cus.dart';
+import 'package:check_in_app/presentation/widget/button_cus.dart';
 import 'package:flutter/material.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 

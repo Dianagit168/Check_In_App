@@ -1,10 +1,10 @@
 import 'package:check_in_app/modelanddata/modelanddata.dart';
-import 'package:check_in_app/screen/qr_scanner.dart';
+import 'package:check_in_app/presentation/screen/qr_scanner.dart';
 import 'package:flutter/material.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 
-class Event extends StatelessWidget {
-  const Event({super.key});
+class EventScreen extends StatelessWidget {
+  const EventScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

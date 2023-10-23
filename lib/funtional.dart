@@ -1,4 +1,4 @@
-import 'package:check_in_app/screen/mainscreen.dart';
+import 'package:check_in_app/presentation/screen/mainscreen.dart';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;

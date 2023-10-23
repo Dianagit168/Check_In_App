@@ -1,10 +1,10 @@
 import 'package:check_in_app/modelanddata/modelanddata.dart';
 
-import 'package:check_in_app/screen/qr_scanner.dart';
+import 'package:check_in_app/presentation/screen/qr_scanner.dart';
 import 'package:flutter/material.dart';
 
-class CategoryEvents extends StatelessWidget {
-  const CategoryEvents({super.key});
+class CategoryEventsScreen extends StatelessWidget {
+  const CategoryEventsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

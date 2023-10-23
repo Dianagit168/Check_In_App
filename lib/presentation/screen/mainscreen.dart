@@ -1,5 +1,5 @@
-import 'package:check_in_app/screen/category_event.dart';
-import 'package:check_in_app/screen/evevnt.dart';
+import 'package:check_in_app/presentation/screen/category_event_screen.dart';
+import 'package:check_in_app/presentation/screen/evevnt_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 
@@ -26,8 +26,8 @@ class MainTap extends StatelessWidget {
 Widget allScreen(BuildContext context) {
   return const TabBarView(
     children: [
-      CategoryEvents(),
-      Event(),
+      CategoryEventsScreen(),
+      EventScreen(),
       Center(child: Text('User Account')),
     ],
   );

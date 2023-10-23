@@ -1,6 +1,4 @@
-import 'package:check_in_app/screen/category_event.dart';
-import 'package:check_in_app/screen/evevnt.dart';
-import 'package:check_in_app/screen/login.dart';
+import 'package:check_in_app/presentation/screen/login_screen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
