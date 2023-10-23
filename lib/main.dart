@@ -1,5 +1,4 @@
-import 'package:check_in_app/presentation/screen/login_screen.dart';
-import 'package:flutter/material.dart';
+import 'package:check_in_app/index.dart';
 
 void main() {
   runApp(const MyApp());

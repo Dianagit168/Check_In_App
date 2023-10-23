@@ -1,7 +1,4 @@
-import 'package:check_in_app/modelanddata/modelanddata.dart';
-
-import 'package:check_in_app/presentation/screen/qr_scanner.dart';
-import 'package:flutter/material.dart';
+import 'package:check_in_app/index.dart';
 
 class CategoryEventsScreen extends StatelessWidget {
   const CategoryEventsScreen({super.key});
@@ -56,7 +53,7 @@ class CategoryEventsScreen extends StatelessWidget {
                     onTap: () => Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const ScanQr(),
+                        builder: (context) => ScanQr(eventTitle: eventData[index].tit!,),
                       ),
                     ),
                     child: SizedBox(

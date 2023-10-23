@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:check_in_app/index.dart';
 
 class EventModel {
   final String? img;

@@ -1,14 +1,11 @@
 import 'dart:ui';
-
 import 'package:check_in_app/funtional.dart';
-import 'package:check_in_app/presentation/widget/button_cus.dart';
-import 'package:flutter/material.dart';
-import 'package:lucide_icons/lucide_icons.dart';
+import 'package:check_in_app/index.dart';
 
 class LoginScreen extends StatelessWidget {
   LoginScreen({super.key});
-  final TextEditingController c1 = TextEditingController();
-  final TextEditingController c2 = TextEditingController();
+  
+  final LoginUcImpl loginUcImpl = LoginUcImpl();
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +20,7 @@ class LoginScreen extends StatelessWidget {
               height: 250,
               decoration: const BoxDecoration(
                   image: DecorationImage(
-                      fit: BoxFit.fill,
+                      fit: BoxFit.cover,
                       image: NetworkImage(
                           'https://d2yy7txqjmdbsq.cloudfront.net/fundraiserevents/c15a39a1-6022-4a18-9cba-5ddcf0153bcd/logo_profile.jpg'))),
               child: BackdropFilter(
@@ -66,23 +63,23 @@ class LoginScreen extends StatelessWidget {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        fieldLogin(
+                        _fieldLogin(
                           context,
                           const Icon(
                             LucideIcons.user,
                             color: Colors.white,
                           ),
                           'User Name',
-                          c1,
+                          loginUcImpl.emailController,
                         ),
-                        fieldLogin(
+                        _fieldLogin(
                           context,
                           const Icon(
                             LucideIcons.lock,
                             color: Colors.white,
                           ),
                           'Password',
-                          c2,
+                          loginUcImpl.passwordController,
                         ),
                       ],
                     ),
@@ -94,7 +91,7 @@ class LoginScreen extends StatelessWidget {
                       tit: 'Login',
                       btnHigh: 40,
                       onNavigator: () {
-                        fetchUser(context, c1.value.text, c2.value.text);
+                        fetchUser(context, loginUcImpl.emailController.value.text, loginUcImpl.passwordController.value.text);
                       },
                     ),
                   ),
@@ -107,7 +104,7 @@ class LoginScreen extends StatelessWidget {
     );
   }
 
-  Widget fieldLogin(
+  Widget _fieldLogin(
     BuildContext context,
     final Icon? icon,
     final String title,

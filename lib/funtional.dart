@@ -1,8 +1,5 @@
-import 'package:check_in_app/presentation/screen/mainscreen.dart';
-
-import 'package:flutter/material.dart';
+import 'package:check_in_app/index.dart';
 import 'package:http/http.dart' as http;
-import 'package:lucide_icons/lucide_icons.dart';
 
 Future fetchUser(context, String username, String password) async {
   if (username.isNotEmpty && password.isNotEmpty) {
@@ -19,7 +16,7 @@ Future fetchUser(context, String username, String password) async {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => const MainTap(),
+          builder: (context) => MainTap(),
         ),
       );
     } else {

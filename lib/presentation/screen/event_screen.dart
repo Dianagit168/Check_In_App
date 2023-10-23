@@ -1,7 +1,4 @@
-import 'package:check_in_app/modelanddata/modelanddata.dart';
-import 'package:check_in_app/presentation/screen/qr_scanner.dart';
-import 'package:flutter/material.dart';
-import 'package:lucide_icons/lucide_icons.dart';
+import 'package:check_in_app/index.dart';
 
 class EventScreen extends StatelessWidget {
   const EventScreen({super.key});
@@ -26,10 +23,11 @@ class EventScreen extends StatelessWidget {
             padding: const EdgeInsets.all(8.0),
             child: InkWell(
               onTap: () => Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const ScanQr(),
-                  )),
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ScanQr(eventTitle: eventData[index].tit!),
+                )
+              ),
               child: Container(
                 height: 300,
                 width: MediaQuery.of(context).size.width,
