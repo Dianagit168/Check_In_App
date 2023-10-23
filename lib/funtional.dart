@@ -1,4 +1,5 @@
-import 'package:check_in_app/screen/qr_scanner.dart';
+import 'package:check_in_app/screen/mainscreen.dart';
+
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:lucide_icons/lucide_icons.dart';
@@ -18,7 +19,7 @@ Future fetchUser(context, String username, String password) async {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => const ScanQr(),
+          builder: (context) => const MainTap(),
         ),
       );
     } else {

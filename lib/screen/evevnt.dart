@@ -1,5 +1,5 @@
-import 'package:check_in_app/screen/login.dart';
 import 'package:check_in_app/modelanddata/modelanddata.dart';
+import 'package:check_in_app/screen/qr_scanner.dart';
 import 'package:flutter/material.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 
@@ -9,7 +9,7 @@ class Event extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(157, 37, 67, 148),
+      backgroundColor: const Color.fromARGB(255, 10, 24, 60),
       appBar: AppBar(
         title: const Text('Events'),
       ),
@@ -28,7 +28,7 @@ class Event extends StatelessWidget {
               onTap: () => Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => LoginScreen(),
+                    builder: (context) => const ScanQr(),
                   )),
               child: Container(
                 height: 300,
