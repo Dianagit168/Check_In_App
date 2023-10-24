@@ -23,7 +23,7 @@ class LoginUcImpl {
       if (emailController.value.text.isNotEmpty && passwordController.value.text.isNotEmpty) {
       await _postApi.loginApi(emailController.text, passwordController.text).then((response) {
         if (response.statusCode == 200) {
-          Navigator.pushReplacementNamed(_context!, "/home");
+          Navigator.of(_context!).pushNamedAndRemoveUntil('/home', (route) => false);
         } else {
           ModernDialog().errorMsg(_context!, "Email or Password is incorrect");
         }

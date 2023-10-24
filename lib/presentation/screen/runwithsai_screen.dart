@@ -117,7 +117,7 @@ class RunWithSaiScreen extends StatelessWidget {
                   borderColor: const Color.fromRGBO(130, 102, 224, 0.5),
                   btnHigh: 50,
                   onNavigator: () {
-                    Navigator.pushReplacementNamed(context, "/");
+                    Navigator.of(context).pushNamedAndRemoveUntil('/', (route) => false);
                   },
                 ),
               ],

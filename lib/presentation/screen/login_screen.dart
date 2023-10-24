@@ -40,7 +40,7 @@ class LoginScreen extends StatelessWidget {
               right: 20,
               child: InkWell(
                 onTap: () async {
-                  Navigator.pushReplacementNamed(context, "/home");
+                  Navigator.of(context).pushNamedAndRemoveUntil('/home', (route) => false);
                 },
                 child: Container(
                   padding: const EdgeInsets.all(12),
