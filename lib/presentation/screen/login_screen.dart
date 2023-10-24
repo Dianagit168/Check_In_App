@@ -1,6 +1,5 @@
-import 'dart:ui';
-import 'package:check_in_app/funtional.dart';
 import 'package:check_in_app/index.dart';
+import 'package:check_in_app/presentation/widget/glassmorphism_cus.dart';
 
 class LoginScreen extends StatelessWidget {
   LoginScreen({super.key});
@@ -9,93 +8,150 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    loginUcImpl.setBuildContext = context;
+
     return Scaffold(
-      backgroundColor: const Color.fromARGB(46, 37, 67, 148),
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
-        child: Column(
+        child: Stack(
           children: [
+
             Container(
               width: MediaQuery.of(context).size.width,
-              height: 250,
+              height: MediaQuery.of(context).size.height,
               decoration: const BoxDecoration(
-                  image: DecorationImage(
-                      fit: BoxFit.cover,
-                      image: NetworkImage(
-                          'https://d2yy7txqjmdbsq.cloudfront.net/fundraiserevents/c15a39a1-6022-4a18-9cba-5ddcf0153bcd/logo_profile.jpg'))),
-              child: BackdropFilter(
-                filter: ImageFilter.blur(sigmaX: 2, sigmaY: 2),
-                child: Container(
-                  color: const Color.fromARGB(46, 37, 67, 148),
+                image: DecorationImage(
+                  fit: BoxFit.cover,
+                  alignment: Alignment.centerRight,
+                  image: AssetImage('assets/images/runwithsai.png')
                 ),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  const Text(
-                    'Welcome',
+
+            Container(
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height,
+              color: const Color.fromRGBO(130, 102, 224, 0.7),
+            ),
+
+            Positioned(
+              top: 75,
+              right: 20,
+              child: InkWell(
+                onTap: () async {
+                  Navigator.pushReplacementNamed(context, "/home");
+                },
+                child: Container(
+                  padding: const EdgeInsets.all(12),
+                  decoration: const BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(50)),
+                    color: Colors.white
+                  ),
+                  child: const Text(
+                    'Skip Login',
                     style: TextStyle(
-                      fontSize: 30,
+                      fontSize: 15,
                       fontWeight: FontWeight.bold,
-                      color: Colors.white,
+                      color: Color.fromRGBO(130, 102, 224, 1),
                     ),
                   ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  const Text(
-                    'Please login now !',
-                    style: TextStyle(
-                      fontSize: 17,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 30,
-                  ),
-                  SizedBox(
-                    height: 250,
-                    width: MediaQuery.of(context).size.width,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        _fieldLogin(
-                          context,
-                          const Icon(
-                            LucideIcons.user,
-                            color: Colors.white,
-                          ),
-                          'User Name',
-                          loginUcImpl.emailController,
+                ),
+              ),
+            ),
+
+
+            Positioned(
+              top: MediaQuery.of(context).size.height * 0.5 - 250, // Adjust this value as needed
+              left: 0,
+              right: 0,
+              child: Center(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Glassmorphism(
+                    blur: 15,
+                    opacity: 0.3,
+                    radius: 20,
+                    child: Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 15),
+                        child: Column(
+                          children: [
+                            const Text(
+                              'Welcome RUN WITH SAI',
+                              style: TextStyle(
+                                fontSize: 24,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            const Text(
+                              'Crew Check-In',
+                              style: TextStyle(
+                                fontSize: 17,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 30,
+                            ),
+                            SizedBox(
+                              height: 250,
+                              width: MediaQuery.of(context).size.width,
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  _fieldLogin(
+                                    context,
+                                    const Icon(
+                                      LucideIcons.user,
+                                      color: Colors.white,
+                                    ),
+                                    'Email',
+                                    loginUcImpl.emailController,
+                                  ),
+                                  _fieldLogin(
+                                    context,
+                                    const Icon(
+                                      LucideIcons.lock,
+                                      color: Colors.white,
+                                    ),
+                                    'Password',
+                                    loginUcImpl.passwordController,
+                                  ),
+                                ],
+                              ),
+                            ),
+                            
+                            const SizedBox(
+                              height: 15,
+                            ),
+
+                            ElevatedButtonCust(
+                              tit: 'Login',
+                              textColor: const Color.fromRGBO(130, 102, 224, 1),
+                              iconColor: const Color.fromRGBO(130, 102, 224, 1),
+                              borderColor: const Color.fromRGBO(130, 102, 224, 1),
+                              btnHigh: 50,
+                              onNavigator: () {
+                                loginUcImpl.loginRequest();
+                              },
+                            ),
+                      
+                            const SizedBox(
+                              height: 15,
+                            ),
+                          ],
                         ),
-                        _fieldLogin(
-                          context,
-                          const Icon(
-                            LucideIcons.lock,
-                            color: Colors.white,
-                          ),
-                          'Password',
-                          loginUcImpl.passwordController,
-                        ),
-                      ],
+                      ),
                     ),
                   ),
-                  Padding(
-                    padding:
-                        const EdgeInsets.only(top: 20, left: 120, right: 120),
-                    child: ElevatedButtonCust(
-                      tit: 'Login',
-                      btnHigh: 40,
-                      onNavigator: () {
-                        fetchUser(context, loginUcImpl.emailController.value.text, loginUcImpl.passwordController.value.text);
-                      },
-                    ),
-                  ),
-                ],
+                ),
               ),
             ),
           ],
@@ -127,10 +183,10 @@ class LoginScreen extends StatelessWidget {
         Container(
           decoration: BoxDecoration(
             border: Border.all(
-              width: 3,
-              color: const Color.fromARGB(255, 37, 67, 148),
+              width: 1.5,
+              color: Colors.white,
             ),
-            borderRadius: const BorderRadius.all(Radius.circular(16)),
+            borderRadius: const BorderRadius.all(Radius.circular(50)),
           ),
           child: TextField(
             style: const TextStyle(color: Colors.white),

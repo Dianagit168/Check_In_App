@@ -6,9 +6,17 @@ class ElevatedButtonCust extends StatelessWidget {
     this.tit,
     this.onNavigator,
     this.btnHigh,
+    this.borderColor = Colors.white,
+    this.btnColor = Colors.white,
+    this.textColor = Colors.white,
+    this.iconColor = Colors.white,
   }) : super(key: key);
   final String? tit;
   final double? btnHigh;
+  final Color? borderColor;
+  final Color? btnColor;
+  final Color? textColor;
+  final Color? iconColor;
   final void Function()? onNavigator;
 
   @override
@@ -18,34 +26,33 @@ class ElevatedButtonCust extends StatelessWidget {
       decoration: BoxDecoration(
         border: Border.all(
           width: 2,
-          color: const Color.fromARGB(255, 37, 67, 148),
+          color: borderColor!,
         ),
-        borderRadius: const BorderRadius.all(Radius.circular(32)),
+        borderRadius: const BorderRadius.all(Radius.circular(50)),
       ),
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
+          backgroundColor: btnColor,
           minimumSize: Size(MediaQuery.of(context).size.width, btnHigh!),
           elevation: 0,
-          // shape: RoundedRectangleBorder(
-          //   borderRadius: BorderRadius.circular(16),
-          // ),
         ),
         onPressed: onNavigator,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Icon(
+            Icon(
               LucideIcons.logIn,
-              color: Color.fromARGB(255, 37, 67, 148),
+              color: iconColor!,
             ),
             const SizedBox(
               width: 7,
             ),
             Text(
               tit!,
-              style: const TextStyle(
-                color: Color.fromARGB(255, 37, 67, 148),
-                fontSize:17
+              style: TextStyle(
+                color: textColor!,
+                fontSize: 17,
+                fontWeight: FontWeight.bold
               ),
             ),
           ],

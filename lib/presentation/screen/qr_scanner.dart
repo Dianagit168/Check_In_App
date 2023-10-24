@@ -21,20 +21,20 @@ class ScanQrState extends State<ScanQr> {
 
 
   // Callback function to pass the event to QRCodeCard
-  Future<void> passEventToQRCodeCard(String code) async {    
-    Map<String, dynamic> jsonMap = json.decode(code);
+  // Future<void> passEventToQRCodeCard(String code) async {    
+  //   Map<String, dynamic> jsonMap = json.decode(code);
     
-    // jsonMap['type'];
+  //   // jsonMap['type'];
 
-    // Use setState to trigger a rebuild of the widget tree
-    setState(() {
-      // Set the data to a variable in the state
-      // This data will be accessible by QRCodeCard
-      _codeFromQRScanner = jsonMap['type'];
+  //   // Use setState to trigger a rebuild of the widget tree
+  //   setState(() {
+  //     // Set the data to a variable in the state
+  //     // This data will be accessible by QRCodeCard
+  //     _codeFromQRScanner = jsonMap['type'];
 
-    });
+  //   });
 
-  }
+  // }
 
   bool _flashOn = false;
   
@@ -50,7 +50,7 @@ class ScanQrState extends State<ScanQr> {
 
           _qrViewController!.pauseCamera().then((value) async {
 
-            passEventToQRCodeCard(event.code!);
+            // passEventToQRCodeCard(event.code!);
             
           }).whenComplete(() {
             // Resume camera after processing the event
@@ -85,14 +85,13 @@ class ScanQrState extends State<ScanQr> {
       appBar: normalAppBar(context, titleAppbar: "Run With Sai"),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.only(top: 15.0),
+          padding: const EdgeInsets.all(15),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              qRCamW(),
-    
+              _qRCamW(),
+            
               _qrResultCard(title: widget.eventTitle, type: _codeFromQRScanner,),
-    
+            
             ],
           ),
         ),
@@ -100,112 +99,112 @@ class ScanQrState extends State<ScanQr> {
     );
   }
 
-  Widget qRCamW() {
-    return Center(
-      child: SizedBox(
-        width: double.infinity,
-        height: (MediaQuery.of(context).size.height * 0.50).roundToDouble(),
-        child: Stack(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(12.0),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(24.0),
-                child: QRView(
-                  cameraFacing: CameraFacing.back,
-                  key: qrKey,
-                  onQRViewCreated: _onQrViewCreated,
-                  overlay: QrScannerOverlayShape(
-                    borderColor: Theme.of(context).primaryColor,
-                    borderRadius: 8,
-                    borderLength: 36,
-                    cutOutSize: 256,
-                    cutOutBottomOffset: 0,
-                  ),
-                ),
+  Widget _qRCamW() {
+    return SizedBox(
+      width: double.infinity,
+      height: (MediaQuery.of(context).size.height * 0.50).roundToDouble(),
+      child: Stack(
+        children: [
+          ClipRRect(
+            borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(25), 
+              topRight: Radius.circular(25),
+            ),
+            child: QRView(
+              cameraFacing: CameraFacing.back,
+              key: qrKey,
+              onQRViewCreated: _onQrViewCreated,
+              overlay: QrScannerOverlayShape(
+                borderColor: Theme.of(context).primaryColor,
+                borderRadius: 25,
+                borderLength: 36,
+                cutOutSize: 275,
+                cutOutBottomOffset: 0,
               ),
             ),
-            Positioned(
-              bottom: 0.0,
-              left: 0.0,
-              child: Padding(
-                padding: const EdgeInsets.all(24.0),
-                child: IconButton(
-                  onPressed: () {
-                    debugPrint("Controller is dead?: $_qrViewController");
-                    _qrViewController!.toggleFlash();
-                    setState(() {
-                      _flashOn = !_flashOn;
-                    });
-                  },
-                  color: Colors.white,
-                  iconSize: 36,
-                  icon: Icon(_flashOn ? Icons.flash_on : Icons.flash_off),
-                  alignment: Alignment.center,
-                ),
+          ),
+          Positioned(
+            bottom: 0.0,
+            left: 0.0,
+            child: Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: IconButton(
+                onPressed: () {
+                  debugPrint("Controller is dead?: $_qrViewController");
+                  _qrViewController!.toggleFlash();
+                  setState(() {
+                    _flashOn = !_flashOn;
+                  });
+                },
+                color: Colors.white,
+                iconSize: 36,
+                icon: Icon(_flashOn ? Icons.flash_on : Icons.flash_off),
+                alignment: Alignment.center,
               ),
-            )
-          ],
-        )
-      ),
+            ),
+          )
+        ],
+      )
     );
   }
 
   Widget _qrResultCard({required String title, required String type}) {
-    return Center(
-      child: Padding(
-        padding: const EdgeInsets.all(12.0),
-        child: Card(
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
-          elevation: 4.0,
-          child: Stack(
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        "Crew: $title",
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 18,
-                        ),
+    return ClipRRect(
+      borderRadius: const BorderRadius.only(
+        bottomLeft: Radius.circular(25), 
+        bottomRight: Radius.circular(25),
+      ),
+      child: Container(
+        color: const Color.fromRGBO(130, 102, 224, 1),
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      "Crew: $title",
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                        fontSize: 18,
                       ),
                     ),
-
-                    Row(
-                      children: [
-                        const Padding(
-                          padding: EdgeInsets.all(8.0),
-                          child: Text(
-                            "Type:",
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 14,
-                            ),
+                  ),
+          
+                  Row(
+                    children: [
+                      const Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: Text(
+                          "Type:",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                            fontSize: 14,
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Chip(
-                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                            label: Text(type)
-                          ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Chip(
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                          label: Text(type)
                         ),
-                      ],
-                    ),
-
-                  ],
-                ),
+                      ),
+                    ],
+                  ),
+          
+                ],
               ),
-            ],
-          ),
-        )
+            ),
+          ],
+        ),
       ),
     );
   }

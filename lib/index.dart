@@ -5,10 +5,12 @@ export 'package:check_in_app/main.dart';
 export 'package:flutter/foundation.dart';
 export 'package:http/http.dart';
 export 'dart:io';
+export 'package:flutter/services.dart';
 
 // ====================> Packages <====================
 export 'package:lucide_icons/lucide_icons.dart';
 export 'package:qr_code_scanner/qr_code_scanner.dart';
+export 'package:lottie/lottie.dart';
 
 // ====================> Data API <====================
 export 'package:check_in_app/data/api/post_rest_api.dart';
