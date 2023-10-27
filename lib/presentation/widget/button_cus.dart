@@ -9,7 +9,8 @@ class ElevatedButtonCust extends StatelessWidget {
     this.borderColor = Colors.white,
     this.btnColor = Colors.white,
     this.textColor = Colors.white,
-    this.iconColor = Colors.white,
+    this.iconColor = Colors.white, 
+    this.iconData,
   }) : super(key: key);
   final String? tit;
   final double? btnHigh;
@@ -17,6 +18,7 @@ class ElevatedButtonCust extends StatelessWidget {
   final Color? btnColor;
   final Color? textColor;
   final Color? iconColor;
+  final IconData? iconData;
   final void Function()? onNavigator;
 
   @override
@@ -40,10 +42,11 @@ class ElevatedButtonCust extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(
-              LucideIcons.logIn,
+            iconData != null ?Icon(
+              iconData,
               color: iconColor!,
-            ),
+            ) : const SizedBox(),
+            
             const SizedBox(
               width: 7,
             ),

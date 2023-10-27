@@ -6,7 +6,7 @@ class RunWithSaiScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: normalAppBar(context, titleAppbar: "Crew Check In"),
+      appBar: normalAppBar(context, titleAppbar: "Crew Check In", isLeading: false),
       body: SafeArea(
         child: Center(
           child: Padding(
@@ -23,7 +23,9 @@ class RunWithSaiScreen extends StatelessWidget {
                     onTap: () => Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const ScanQr(eventTitle: 'Run With Sai',),
+                        builder: (context) => 
+                        const RedeemTicketScreen(),
+                        // const ScanQr(eventTitle: 'Run With Sai',),
                       )
                     ),
                     child: Column(
@@ -117,7 +119,12 @@ class RunWithSaiScreen extends StatelessWidget {
                   borderColor: const Color.fromRGBO(130, 102, 224, 0.5),
                   btnHigh: 50,
                   onNavigator: () {
-                    Navigator.of(context).pushNamedAndRemoveUntil('/', (route) => false);
+                    SecureStorage.clearAllSecure().then((value) {
+                      Navigator.pushReplacement(context,
+                        MaterialPageRoute (builder: (context) {return LoginScreen();})
+                      ); 
+                    });
+                    
                   },
                 ),
               ],

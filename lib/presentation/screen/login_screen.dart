@@ -1,15 +1,15 @@
 import 'package:check_in_app/index.dart';
-import 'package:check_in_app/presentation/widget/glassmorphism_cus.dart';
+import 'package:check_in_app/presentation/screen/register_screen.dart';
 
 class LoginScreen extends StatelessWidget {
   LoginScreen({super.key});
   
-  final LoginUcImpl loginUcImpl = LoginUcImpl();
+  final AuthUcImpl authUcImpl = AuthUcImpl();
 
   @override
   Widget build(BuildContext context) {
 
-    loginUcImpl.setBuildContext = context;
+    authUcImpl.setBuildContext = context;
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -35,31 +35,30 @@ class LoginScreen extends StatelessWidget {
               color: const Color.fromRGBO(130, 102, 224, 0.7),
             ),
 
-            Positioned(
-              top: 75,
-              right: 20,
-              child: InkWell(
-                onTap: () async {
-                  Navigator.of(context).pushNamedAndRemoveUntil('/home', (route) => false);
-                },
-                child: Container(
-                  padding: const EdgeInsets.all(12),
-                  decoration: const BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(50)),
-                    color: Colors.white
-                  ),
-                  child: const Text(
-                    'Skip Login',
-                    style: TextStyle(
-                      fontSize: 15,
-                      fontWeight: FontWeight.bold,
-                      color: Color.fromRGBO(130, 102, 224, 1),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-
+            //  Positioned(
+            //   top: 75,
+            //   right: 20,
+            //   child: InkWell(
+            //     onTap: () async {
+            //       Navigator.of(context).pushNamedAndRemoveUntil('/home', (route) => false);
+            //     },
+            //     child: Container(
+            //       padding: const EdgeInsets.all(12),
+            //       decoration: const BoxDecoration(
+            //         borderRadius: BorderRadius.all(Radius.circular(50)),
+            //         color: Colors.white
+            //       ),
+            //       child: const Text(
+            //         'Skip Login',
+            //         style: TextStyle(
+            //           fontSize: 15,
+            //           fontWeight: FontWeight.bold,
+            //           color: Color.fromRGBO(130, 102, 224, 1),
+            //         ),
+            //       ),
+            //     ),
+            //   ),
+            // ),
 
             Positioned(
               top: MediaQuery.of(context).size.height * 0.5 - 250, // Adjust this value as needed
@@ -73,84 +72,108 @@ class LoginScreen extends StatelessWidget {
                     opacity: 0.3,
                     radius: 20,
                     child: Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 15),
-                        child: Column(
-                          children: [
-                            const Text(
-                              'Welcome RUN WITH SAI',
-                              style: TextStyle(
-                                fontSize: 24,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white,
+                      padding: const EdgeInsets.all(15.0),
+                      child: Column(
+                        children: [
+                          const Text(
+                            'Welcome RUN WITH SAI',
+                            style: TextStyle(
+                              fontSize: 24,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          const Text(
+                            'Crew Check-In',
+                            style: TextStyle(
+                              fontSize: 17,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 30,
+                          ),
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              textfieldWidget(
+                                context,
+                                const Icon(
+                                  LucideIcons.user,
+                                  color: Colors.white,
+                                ),
+                                'Email',
+                                authUcImpl.authModel.emailController,
                               ),
-                            ),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            const Text(
-                              'Crew Check-In',
-                              style: TextStyle(
-                                fontSize: 17,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white,
-                              ),
-                            ),
-                            const SizedBox(
-                              height: 30,
-                            ),
-                            SizedBox(
-                              height: 250,
-                              width: MediaQuery.of(context).size.width,
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                children: [
-                                  _fieldLogin(
-                                    context,
-                                    const Icon(
-                                      LucideIcons.user,
-                                      color: Colors.white,
-                                    ),
-                                    'Email',
-                                    loginUcImpl.emailController,
-                                  ),
-                                  _fieldLogin(
-                                    context,
-                                    const Icon(
-                                      LucideIcons.lock,
-                                      color: Colors.white,
-                                    ),
-                                    'Password',
-                                    loginUcImpl.passwordController,
-                                  ),
-                                ],
-                              ),
-                            ),
-                            
-                            const SizedBox(
-                              height: 15,
-                            ),
 
-                            ElevatedButtonCust(
-                              tit: 'Login',
-                              textColor: const Color.fromRGBO(130, 102, 224, 1),
-                              iconColor: const Color.fromRGBO(130, 102, 224, 1),
-                              borderColor: const Color.fromRGBO(130, 102, 224, 1),
-                              btnHigh: 50,
-                              onNavigator: () {
-                                loginUcImpl.loginRequest();
-                              },
-                            ),
-                      
-                            const SizedBox(
-                              height: 15,
-                            ),
-                          ],
-                        ),
+                              const SizedBox(height: 10),
+
+                              textfieldWidget(
+                                context,
+                                const Icon(
+                                  LucideIcons.lock,
+                                  color: Colors.white,
+                                ),
+                                'Password',
+                                authUcImpl.authModel.passwordController,
+                                isSecure: true
+                              ),
+                            ],
+                          ),
+                          
+                          const SizedBox(
+                            height: 25,
+                          ),
+
+                          ElevatedButtonCust(
+                            tit: 'Login',
+                            iconData: LucideIcons.logIn,
+                            textColor: const Color.fromRGBO(130, 102, 224, 1),
+                            iconColor: const Color.fromRGBO(130, 102, 224, 1),
+                            borderColor: const Color.fromRGBO(130, 102, 224, 1),
+                            btnHigh: 50,
+                            onNavigator: () async {
+                              await authUcImpl.loginRequest(
+                                email: authUcImpl.authModel.emailController.value.text, 
+                                password: authUcImpl.authModel.passwordController.value.text
+                              );
+                            },
+                          ),
+                          
+                        ],
                       ),
                     ),
                   ),
+                ),
+              ),
+            ),
+            
+            Positioned(
+              bottom: 70,
+              left: 15,
+              right: 15,
+              child: Glassmorphism(
+                blur: 15,
+                opacity: 0.3,
+                radius: 50,
+                child: ElevatedButtonCust(
+                  tit: "Don't have account? CLICK HERE",
+                  textColor: const Color.fromRGBO(130, 102, 224, 1),
+                  iconColor: const Color.fromRGBO(130, 102, 224, 1),
+                  borderColor: const Color.fromRGBO(130, 102, 224, 1),
+                  btnHigh: 50,
+                  onNavigator: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => RegisterScreen(),
+                      )
+                    );
+                  },
                 ),
               ),
             ),
@@ -160,44 +183,4 @@ class LoginScreen extends StatelessWidget {
     );
   }
 
-  Widget _fieldLogin(
-    BuildContext context,
-    final Icon? icon,
-    final String title,
-    final TextEditingController? controller,
-  ) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          title,
-          style: const TextStyle(
-            fontSize: 17,
-            fontWeight: FontWeight.bold,
-            color: Colors.white,
-          ),
-        ),
-        const SizedBox(
-          height: 7,
-        ),
-        Container(
-          decoration: BoxDecoration(
-            border: Border.all(
-              width: 1.5,
-              color: Colors.white,
-            ),
-            borderRadius: const BorderRadius.all(Radius.circular(50)),
-          ),
-          child: TextField(
-            style: const TextStyle(color: Colors.white),
-            decoration: InputDecoration(
-              border: InputBorder.none,
-              prefixIcon: icon!,
-            ),
-            controller: controller,
-          ),
-        ),
-      ],
-    );
-  }
 }
