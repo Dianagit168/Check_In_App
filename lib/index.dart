@@ -21,6 +21,7 @@ export 'package:input_quantity/input_quantity.dart';
 export 'package:check_in_app/data/api/post_rest_api.dart';
 export 'package:check_in_app/data/api/secure_storage.dart';
 export 'package:check_in_app/data/api/db_key.dart';
+export 'package:check_in_app/data/api/get_rest_api.dart';
 
 // ====================> Domain Usecases <====================
 export 'package:check_in_app/domain/usecases/auth_uc_impl.dart';
@@ -28,6 +29,7 @@ export 'package:check_in_app/domain/usecases/auth_uc_impl.dart';
 // ====================> Domain Model <====================
 export 'package:check_in_app/domain/models/event_m.dart';
 export 'package:check_in_app/domain/models/auth_m.dart';
+export 'package:check_in_app/domain/models/ticket_m.dart';
 
 // ====================> Presentation Screen <====================
 export 'package:check_in_app/presentation/screen/login_screen.dart';

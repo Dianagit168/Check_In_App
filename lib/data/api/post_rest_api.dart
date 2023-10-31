@@ -1,7 +1,7 @@
 import 'package:check_in_app/index.dart';
 import 'package:http/http.dart' as http;
 
-class RestApi {
+class PostRestApi {
 
   static Map<String, String> conceteHeader({String? key, String? value}) { /* Concete More Content Of Header */
     return key != null 
@@ -41,5 +41,17 @@ class RestApi {
       }),
     );
   }
-  
+
+  Future<http.Response> redeemTicketApi(String redeemJson) async {
+
+    return SecureStorage.readSecure(DbKey.bearerToken).then((token) async {
+      return await http.post(
+        Uri.parse("${dotenv.env["API_URL"]}api/ticket/redeemed?token=$token"),
+        headers: conceteHeader(),
+        body: redeemJson
+      );
+    });
+
+  }
+
 }

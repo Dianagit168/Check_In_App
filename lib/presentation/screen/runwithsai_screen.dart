@@ -24,8 +24,8 @@ class RunWithSaiScreen extends StatelessWidget {
                       context,
                       MaterialPageRoute(
                         builder: (context) => 
-                        const RedeemTicketScreen(),
-                        // const ScanQr(eventTitle: 'Run With Sai',),
+                        // const RedeemTicketScreen(),
+                        const ScanQr(eventTitle: 'Run With Sai',),
                       )
                     ),
                     child: Column(

@@ -1,3 +1,4 @@
+import 'package:check_in_app/domain/usecases/ticket_uc_impl.dart';
 import 'package:check_in_app/index.dart';
 
 class ScanQr extends StatefulWidget {
@@ -12,6 +13,8 @@ class ScanQr extends StatefulWidget {
 
 class ScanQrState extends State<ScanQr> {
 
+  final TicketUcImpl _ticketUcImpl = TicketUcImpl();
+
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
   
   QRViewController? _qrViewController;
@@ -25,24 +28,40 @@ class ScanQrState extends State<ScanQr> {
 
     try {
       _qrViewController!.scannedDataStream.listen((event) {
+
         if (isScanning) {
 
-          _qrViewController!.pauseCamera().then((value) async {
+          isScanning = false; // Set the flag to false to indicate scanning has occurred
 
-            isScanning = false; // Set the flag to false to indicate scanning has occurred
+          List<String> parts = event.code!.split('/');
+          String id = parts.last.split('-').first;
 
+          print(event.code);
+
+          ModernDialog().dialogLoading(context);
+
+          _ticketUcImpl.getTicketData(id).then((value) {
+
+            Navigator.pop(context);
+            
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => 
-                const RedeemTicketScreen(),
-              )
-            );
-            
-          }).whenComplete(() {
-            // Resume camera after processing the event
-            _qrViewController!.resumeCamera().then((value) => isScanning = true);
+                builder: (context) => RedeemTicketScreen(
+                  id: id,
+                  ticketUcImpl: _ticketUcImpl,
+                  ticketModel: _ticketUcImpl.ticketModel.value
+                ),
+              ),
+            ).then((_) {
+              // Resume camera after navigating to a new screen
+              _qrViewController!.resumeCamera().then((value) => isScanning = true);
+            });
           });
+
+          // Pause the camera before navigating to a new screen
+          _qrViewController!.pauseCamera();
+
         }
       });
     } catch (e) {
@@ -55,6 +74,7 @@ class ScanQrState extends State<ScanQr> {
   @override
   void initState() {
     super.initState();
+    _ticketUcImpl.setBuildContext = context;
   }
 
   @override

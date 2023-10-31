@@ -4,7 +4,7 @@ import 'package:check_in_app/index.dart';
 class AuthUcImpl {
   BuildContext? _context;
 
-  final RestApi _postApi = RestApi();
+  final PostRestApi _postApi = PostRestApi();
 
   final AuthModel authModel = AuthModel();
 
@@ -25,7 +25,7 @@ class AuthUcImpl {
 
           if (response.statusCode == 200) {
 
-            await SecureStorage.writeSecure(DbKey.bearerToken, authModel.decode!['access_token']);
+            await SecureStorage.writeSecure(DbKey.bearerToken, authModel.decode!['token']);
 
             Navigator.pushReplacement(_context!,
               MaterialPageRoute (builder: (context) {return const RunWithSaiScreen();})
@@ -86,7 +86,7 @@ class AuthUcImpl {
 
                     if (loginResponse.statusCode == 200) {
 
-                      await SecureStorage.writeSecure(DbKey.bearerToken, authModel.decode!['access_token']);
+                      await SecureStorage.writeSecure(DbKey.bearerToken, authModel.decode!['token']);
 
                       Navigator.pushReplacement(_context!,
                         MaterialPageRoute (builder: (context) {return const RunWithSaiScreen();})
