@@ -6,16 +6,17 @@ export 'package:flutter/foundation.dart';
 export 'package:http/http.dart';
 export 'dart:io';
 export 'package:flutter/services.dart';
+export 'package:quickalert/quickalert.dart';
+export 'package:check_in_app/router.dart';
 
 // ====================> Packages <====================
 export 'package:lucide_icons/lucide_icons.dart';
 export 'package:qr_code_scanner/qr_code_scanner.dart';
 export 'package:lottie/lottie.dart';
 export 'package:flutter_dotenv/flutter_dotenv.dart';
-export 'package:flutter_secure_storage/flutter_secure_storage.dart';
-export 'package:flutter_native_splash/flutter_native_splash.dart';
 export 'package:input_quantity/input_quantity.dart';
-
+export 'package:flutter_secure_storage/flutter_secure_storage.dart';
+export 'package:go_router/go_router.dart';
 
 // ====================> Data API <====================
 export 'package:check_in_app/data/api/post_rest_api.dart';
@@ -25,13 +26,16 @@ export 'package:check_in_app/data/api/get_rest_api.dart';
 
 // ====================> Domain Usecases <====================
 export 'package:check_in_app/domain/usecases/auth_uc_impl.dart';
+export 'package:check_in_app/domain/usecases/ticket_uc_impl.dart';
 
 // ====================> Domain Model <====================
 export 'package:check_in_app/domain/models/event_m.dart';
 export 'package:check_in_app/domain/models/auth_m.dart';
 export 'package:check_in_app/domain/models/ticket_m.dart';
+export 'package:check_in_app/domain/models/redeem_item_m.dart';
 
 // ====================> Presentation Screen <====================
+export 'package:check_in_app/presentation/screen/register_screen.dart';
 export 'package:check_in_app/presentation/screen/login_screen.dart';
 export 'package:check_in_app/presentation/screen/main_screen.dart';
 export 'package:check_in_app/presentation/screen/qr_scanner.dart';

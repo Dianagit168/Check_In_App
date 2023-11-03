@@ -1,3 +1,4 @@
+import 'dart:ui';
 import 'package:check_in_app/index.dart';
 
 class RegisterScreen extends StatelessWidget {
@@ -13,35 +14,28 @@ class RegisterScreen extends StatelessWidget {
     return Scaffold(
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
-        child: Stack(
-          children: [
-
-            Container(
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height,
-              decoration: const BoxDecoration(
-                image: DecorationImage(
-                  fit: BoxFit.cover,
-                  alignment: Alignment.centerRight,
-                  image: AssetImage('assets/images/runwithsai.png')
-                ),
+        child: Container(
+          height: MediaQuery.of(context).size.height,
+          decoration: const BoxDecoration(
+            image: DecorationImage(
+              fit: BoxFit.cover,
+              alignment: Alignment.centerRight,
+              image: AssetImage('assets/images/runwithsai.png'),
+            ),
+          ),
+          child: BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
+            child: Container(
+              padding: const EdgeInsets.all(8.0),
+              decoration: BoxDecoration(
+                color: Colors.black.withOpacity(0.2),
               ),
-            ),
-
-            Container(
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height,
-              color: const Color.fromRGBO(130, 102, 224, 0.7),
-            ),
-            
-            Positioned(
-              top: MediaQuery.of(context).size.height * 0.5 - 300, // Adjust this value as needed
-              left: 0,
-              right: 0,
-              child: Center(
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Glassmorphism(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Spacer(),
+                    
+                  Glassmorphism(
                     blur: 15,
                     opacity: 0.3,
                     radius: 20,
@@ -83,9 +77,9 @@ class RegisterScreen extends StatelessWidget {
                                 'Name',
                                 authUcImpl.authModel.nameController,
                               ),
-
+                  
                               const SizedBox(height: 10),
-
+                  
                               textfieldWidget(
                                 context,
                                 const Icon(
@@ -95,9 +89,9 @@ class RegisterScreen extends StatelessWidget {
                                 'Email',
                                 authUcImpl.authModel.emailController,
                               ),
-
+                  
                               const SizedBox(height: 10),
-
+                  
                               textfieldWidget(
                                 context,
                                 const Icon(
@@ -108,9 +102,9 @@ class RegisterScreen extends StatelessWidget {
                                 authUcImpl.authModel.passwordController,
                                 isSecure: true
                               ),
-
+                  
                               const SizedBox(height: 10),
-
+                  
                               textfieldWidget(
                                 context,
                                 const Icon(
@@ -127,7 +121,7 @@ class RegisterScreen extends StatelessWidget {
                           const SizedBox(
                             height: 15,
                           ),
-
+                  
                           ElevatedButtonCust(
                             tit: 'Register',
                             iconData: LucideIcons.logIn,
@@ -149,31 +143,31 @@ class RegisterScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-                ),
+
+                  const Spacer(),
+                  
+                  Glassmorphism(
+                    blur: 15,
+                    opacity: 0.3,
+                    radius: 50,
+                    child: ElevatedButtonCust(
+                      tit: "Already have account? CLICK HERE",
+                      textColor: const Color.fromRGBO(130, 102, 224, 1),
+                      iconColor: const Color.fromRGBO(130, 102, 224, 1),
+                      borderColor: const Color.fromRGBO(130, 102, 224, 1),
+                      btnHigh: 50,
+                      onNavigator: () {
+                        context.pop();
+                      },
+                    ),
+                  ),
+
+                  const SizedBox(height: 50),
+
+                ],
               ),
             ),
-            
-            Positioned(
-              bottom: 70,
-              left: 15,
-              right: 15,
-              child: Glassmorphism(
-                blur: 15,
-                opacity: 0.3,
-                radius: 50,
-                child: ElevatedButtonCust(
-                  tit: "Already have account? CLICK HERE",
-                  textColor: const Color.fromRGBO(130, 102, 224, 1),
-                  iconColor: const Color.fromRGBO(130, 102, 224, 1),
-                  borderColor: const Color.fromRGBO(130, 102, 224, 1),
-                  btnHigh: 50,
-                  onNavigator: () {
-                    Navigator.pop(context);
-                  },
-                ),
-              ),
-            ),
-          ],
+          ),
         ),
       ),
     );

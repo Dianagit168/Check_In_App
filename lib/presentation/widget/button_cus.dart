@@ -54,7 +54,7 @@ class ElevatedButtonCust extends StatelessWidget {
               tit!,
               style: TextStyle(
                 color: textColor!,
-                fontSize: 17,
+                fontSize: 15,
                 fontWeight: FontWeight.bold
               ),
             ),

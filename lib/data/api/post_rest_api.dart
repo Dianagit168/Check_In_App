@@ -46,7 +46,7 @@ class PostRestApi {
 
     return SecureStorage.readSecure(DbKey.bearerToken).then((token) async {
       return await http.post(
-        Uri.parse("${dotenv.env["API_URL"]}api/ticket/redeemed?token=$token"),
+        Uri.parse("${dotenv.env["API_URL"]}${dotenv.env["API_REGISTER"]}?token=$token"),
         headers: conceteHeader(),
         body: redeemJson
       );

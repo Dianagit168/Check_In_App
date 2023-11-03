@@ -1,73 +1,40 @@
+import 'dart:ui';
 import 'package:check_in_app/index.dart';
-import 'package:check_in_app/presentation/screen/register_screen.dart';
 
 class LoginScreen extends StatelessWidget {
   LoginScreen({super.key});
-  
+
   final AuthUcImpl authUcImpl = AuthUcImpl();
 
   @override
   Widget build(BuildContext context) {
-
     authUcImpl.setBuildContext = context;
 
     return Scaffold(
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
-        child: Stack(
-          children: [
-
-            Container(
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height,
-              decoration: const BoxDecoration(
-                image: DecorationImage(
-                  fit: BoxFit.cover,
-                  alignment: Alignment.centerRight,
-                  image: AssetImage('assets/images/runwithsai.png')
-                ),
+        child: Container(
+          height: MediaQuery.of(context).size.height,
+          decoration: const BoxDecoration(
+            image: DecorationImage(
+              fit: BoxFit.cover,
+              alignment: Alignment.centerRight,
+              image: AssetImage('assets/images/runwithsai.png'),
+            ),
+          ),
+          child: BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: 4.0, sigmaY: 4.0),
+            child: Container(
+              padding: const EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                color: Colors.black.withOpacity(0.2),
               ),
-            ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Spacer(),
 
-            Container(
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height,
-              color: const Color.fromRGBO(130, 102, 224, 0.7),
-            ),
-
-            //  Positioned(
-            //   top: 75,
-            //   right: 20,
-            //   child: InkWell(
-            //     onTap: () async {
-            //       Navigator.of(context).pushNamedAndRemoveUntil('/home', (route) => false);
-            //     },
-            //     child: Container(
-            //       padding: const EdgeInsets.all(12),
-            //       decoration: const BoxDecoration(
-            //         borderRadius: BorderRadius.all(Radius.circular(50)),
-            //         color: Colors.white
-            //       ),
-            //       child: const Text(
-            //         'Skip Login',
-            //         style: TextStyle(
-            //           fontSize: 15,
-            //           fontWeight: FontWeight.bold,
-            //           color: Color.fromRGBO(130, 102, 224, 1),
-            //         ),
-            //       ),
-            //     ),
-            //   ),
-            // ),
-
-            Positioned(
-              top: MediaQuery.of(context).size.height * 0.5 - 250, // Adjust this value as needed
-              left: 0,
-              right: 0,
-              child: Center(
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Glassmorphism(
+                  Glassmorphism(
                     blur: 15,
                     opacity: 0.3,
                     radius: 20,
@@ -109,9 +76,7 @@ class LoginScreen extends StatelessWidget {
                                 'Email',
                                 authUcImpl.authModel.emailController,
                               ),
-
                               const SizedBox(height: 10),
-
                               textfieldWidget(
                                 context,
                                 const Icon(
@@ -120,15 +85,13 @@ class LoginScreen extends StatelessWidget {
                                 ),
                                 'Password',
                                 authUcImpl.authModel.passwordController,
-                                isSecure: true
+                                isSecure: true,
                               ),
                             ],
                           ),
-                          
                           const SizedBox(
                             height: 25,
                           ),
-
                           ElevatedButtonCust(
                             tit: 'Login',
                             iconData: LucideIcons.logIn,
@@ -138,49 +101,41 @@ class LoginScreen extends StatelessWidget {
                             btnHigh: 50,
                             onNavigator: () async {
                               await authUcImpl.loginRequest(
-                                email: authUcImpl.authModel.emailController.value.text, 
-                                password: authUcImpl.authModel.passwordController.value.text
+                                email: authUcImpl.authModel.emailController.value.text,
+                                password: authUcImpl.authModel.passwordController.value.text,
                               );
                             },
                           ),
-                          
                         ],
                       ),
                     ),
                   ),
-                ),
+
+                  const Spacer(),
+                  
+                  Glassmorphism(
+                    blur: 15,
+                    opacity: 0.3,
+                    radius: 50,
+                    child: ElevatedButtonCust(
+                      tit: "Don't have account? CLICK HERE",
+                      textColor: const Color.fromRGBO(130, 102, 224, 1),
+                      iconColor: const Color.fromRGBO(130, 102, 224, 1),
+                      borderColor: const Color.fromRGBO(130, 102, 224, 1),
+                      btnHigh: 50,
+                      onNavigator: () {
+                        context.pushNamed(RouterName.registerScreen);
+                      },
+                    ),
+                  ),
+
+                  const SizedBox(height: 50),
+                ],
               ),
             ),
-            
-            Positioned(
-              bottom: 70,
-              left: 15,
-              right: 15,
-              child: Glassmorphism(
-                blur: 15,
-                opacity: 0.3,
-                radius: 50,
-                child: ElevatedButtonCust(
-                  tit: "Don't have account? CLICK HERE",
-                  textColor: const Color.fromRGBO(130, 102, 224, 1),
-                  iconColor: const Color.fromRGBO(130, 102, 224, 1),
-                  borderColor: const Color.fromRGBO(130, 102, 224, 1),
-                  btnHigh: 50,
-                  onNavigator: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => RegisterScreen(),
-                      )
-                    );
-                  },
-                ),
-              ),
-            ),
-          ],
+          ),
         ),
       ),
     );
   }
-
 }

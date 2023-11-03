@@ -6,6 +6,7 @@ class Glassmorphism extends StatelessWidget {
   final double opacity;
   final double radius;
   final Widget child;
+  final double borderWidth;
 
   const Glassmorphism({
     Key? key,
@@ -13,6 +14,7 @@ class Glassmorphism extends StatelessWidget {
     required this.opacity,
     required this.radius,
     required this.child,
+    this.borderWidth = 1.5
   }) : super(key: key);
 
   @override
@@ -23,10 +25,10 @@ class Glassmorphism extends StatelessWidget {
         filter: ImageFilter.blur(sigmaX: blur, sigmaY: blur),
         child: Container(
           decoration: BoxDecoration(
-            color: Colors.white.withOpacity(opacity),
+            color: Colors.black.withOpacity(opacity),
             borderRadius: BorderRadius.all(Radius.circular(radius)),
             border: Border.all(
-              width: 1.5,
+              width: borderWidth,
               color: Colors.white.withOpacity(0.2),
             ),
           ),

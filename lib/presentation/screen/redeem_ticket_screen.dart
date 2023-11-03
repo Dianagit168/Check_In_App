@@ -1,7 +1,4 @@
-import 'package:check_in_app/domain/models/redeem_item_m.dart';
-import 'package:check_in_app/domain/usecases/ticket_uc_impl.dart';
 import 'package:check_in_app/index.dart';
-import 'package:quickalert/quickalert.dart';
 
 class RedeemTicketScreen extends StatelessWidget {
   final String id;
@@ -10,28 +7,24 @@ class RedeemTicketScreen extends StatelessWidget {
   const RedeemTicketScreen({super.key, required this.ticketModel, required this.ticketUcImpl, required this.id});
 
   @override
-  Widget build(BuildContext context) {    
-    
+  Widget build(BuildContext context) {
     ticketUcImpl.setBuildContext = context;
-
-    int newQty = 0;
 
     // Convert to the desired format for the POST request
     ticketUcImpl.redeemItems = ticketModel.data!.map((itemData) {
       return RedeemItemModel(
         orderId: itemData.orderId!,
         lineItem: itemData.lineItem!,
-        qty: newQty,
+        qty: 0,
       );
     }).toList();
-    
+
     return Scaffold(
       appBar: normalAppBar(context, titleAppbar: "Redeem Ticket"),
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
         child: Column(
           children: [
-        
             Padding(
               padding: const EdgeInsets.all(10.0),
               child: ClipRRect(
@@ -42,51 +35,58 @@ class RedeemTicketScreen extends StatelessWidget {
                 ),
               ),
             ),
-        
-            _cardTypeTicket(context),
-        
+            ticketModel.data!.isEmpty
+                ? const Padding(
+                    padding: EdgeInsets.all(12.0),
+                    child: Text("Data not found", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
+                  )
+                : _cardTypeTicket(context),
           ],
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: Padding(
-        padding: const EdgeInsets.all(10.0),
-        child: ElevatedButtonCust(
-          tit: 'REDEEM TICKET',
-          iconData: LucideIcons.ticket,
-          textColor: const Color.fromRGBO(130, 102, 224, 1),
-          iconColor: const Color.fromRGBO(130, 102, 224, 1),
-          borderColor: const Color.fromRGBO(130, 102, 224, 1),
-          btnHigh: 50,
-          onNavigator: () async {
-            QuickAlert.show(
-              context: context,
-              type: QuickAlertType.warning,
-              title: "Ready to REDEEM?",
-              showCancelBtn: true,
-              confirmBtnText: "Yes",
-              cancelBtnText: "No",
-              onConfirmBtnTap: () async {
-                Navigator.pop(context);
-                print("ticketUcImpl.jsonDataRedeem ${ticketUcImpl.jsonDataRedeem}");
-                await ticketUcImpl.redeemTicket(ticketUcImpl.jsonDataRedeem);
-              },
-            );
-            
-          },
-        ),
-      ),
+      floatingActionButton: ticketModel.data!.isEmpty
+          ? const SizedBox()
+          : Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: ElevatedButtonCust(
+                tit: 'REDEEM TICKET',
+                iconData: LucideIcons.ticket,
+                textColor: const Color.fromRGBO(130, 102, 224, 1),
+                iconColor: const Color.fromRGBO(130, 102, 224, 1),
+                borderColor: const Color.fromRGBO(130, 102, 224, 1),
+                btnHigh: 50,
+                onNavigator: () async {
+                  await _showRedeemConfirmation(context);
+                },
+              ),
+            ),
     );
   }
 
-  Widget _cardTypeTicket(BuildContext context){
+  Future<void> _showRedeemConfirmation(BuildContext context) async {
+    QuickAlert.show(
+      context: context,
+      type: QuickAlertType.warning,
+      title: "Ready to REDEEM?",
+      showCancelBtn: true,
+      confirmBtnText: "Yes",
+      cancelBtnText: "No",
+      onConfirmBtnTap: () async {
+        Navigator.pop(context);
+        await ticketUcImpl.redeemTicket(ticketUcImpl.jsonDataRedeem);
+      },
+    );
+  }
+
+  Widget _cardTypeTicket(BuildContext context) {
     return Card(
       margin: const EdgeInsets.all(10),
       child: Container(
         width: MediaQuery.of(context).size.width,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15),
-          color: Colors.white
+          color: Colors.white,
         ),
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 5),
@@ -95,7 +95,6 @@ class RedeemTicketScreen extends StatelessWidget {
             physics: const NeverScrollableScrollPhysics(),
             itemCount: ticketModel.data!.length,
             itemBuilder: (context, index) {
-
               final data = ticketModel.data![index];
 
               return Padding(
@@ -110,27 +109,24 @@ class RedeemTicketScreen extends StatelessWidget {
                           data.title!,
                           style: const TextStyle(fontWeight: FontWeight.bold),
                         ),
-
                         Text(
                           "Total: ${data.qty}/Redeemed: ${data.used}",
                           style: const TextStyle(fontSize: 13),
                         ),
                       ],
                     ),
-              
-                    data.qty == data.used 
-                    ? const SizedBox() 
-                    : SizedBox(
-                      width: MediaQuery.of(context).size.width,
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 10),
-                        child: _amountBtn(ticketUcImpl.redeemItems, index),
-                      )
-                    ),
+                    if (data.qty != data.used)
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 10),
+                          child: _amountBtn(ticketUcImpl.redeemItems, index),
+                        ),
+                      ),
                   ],
                 ),
               );
-            }
+            },
           ),
         ),
       ),
@@ -140,12 +136,11 @@ class RedeemTicketScreen extends StatelessWidget {
   Widget _amountBtn(List<RedeemItemModel> items, int index) {
     return InputQty(
       maxVal: ticketModel.data![index].qty! - ticketModel.data![index].used!,
-      initVal: 0,
+      initVal: ticketModel.data![index].qty! - ticketModel.data![index].used!,
       steps: 1,
       minVal: 0,
       qtyFormProps: const QtyFormProps(enableTyping: true),
       onQtyChanged: (value) {
-
         items[index].qty = value;
 
         // Convert the updated items list to the desired format
@@ -162,7 +157,6 @@ class RedeemTicketScreen extends StatelessWidget {
 
         // Convert newData to JSON for printing or further usage
         ticketUcImpl.jsonDataRedeem = jsonEncode(newData);
-
       },
       decoration: const QtyDecorationProps(
         isBordered: true,
@@ -173,12 +167,11 @@ class RedeemTicketScreen extends StatelessWidget {
           size: 35,
         ),
         plusBtn: Icon(
-          LucideIcons.plus, 
+          LucideIcons.plus,
           color: Colors.indigo,
           size: 35,
         ),
       ),
     );
   }
-
 }

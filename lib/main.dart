@@ -11,57 +11,81 @@ Future main() async {
   });
 }
 
-Widget initialization() {
-  // Load resource
-  return FutureBuilder<String>(
-    future: SecureStorage.readSecure(DbKey.bearerToken),
-    builder: (context, snapshot) {
-      if (snapshot.hasData && snapshot.data!.isNotEmpty) {
-        return const RunWithSaiScreen();
-      } else {
-        return LoginScreen();
-      }
-    },
-  );
-}
-
-// Future<void> initialization() async {
-//   // Load resource
-
-//   print("run token");
-//   // Future.delayed(const Duration(seconds: 3), () async {
-//     await SecureStorage.readSecure(DbKey.bearerToken)!.then((token) async {
-
-//       print(token);
-//       if(token.isNotEmpty) {
-//         const RunWithSaiScreen();
-//       } 
-//       else {
-//         LoginScreen();
-//       }
-//     });
-//   // });
-  
-
-// }
-
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
       title: 'Flutter Demo',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
+        visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: initialization(),
-      // initialRoute: '/',
-      // routes: {
-      //   '/': (context) => LoginScreen(),
-      //   '/home': (context) => const RunWithSaiScreen(),
-      // },
+      builder: (context, child) => Scaffold(
+        // Global GestureDetector that will dismiss the keyboard
+        body: GestureDetector(
+          onTap: () {
+            hideKeyboard(context);
+          },
+          child: child,
+        ),
+      ),
+      routerConfig: router,
     );
   }
+
+  void hideKeyboard(BuildContext context) {
+    FocusScopeNode currentFocus = FocusScope.of(context);
+    if (!currentFocus.hasPrimaryFocus && currentFocus.focusedChild != null) {
+      FocusManager.instance.primaryFocus!.unfocus();
+    }
+  }
+}
+
+
+class SplashScreen extends StatelessWidget {
+
+  final AuthUcImpl _authUcImpl = AuthUcImpl();
+
+  SplashScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+
+    _authUcImpl.setBuildContext = context;
+
+    _authUcImpl.checkExistAcc();
+
+    return Scaffold(
+      body: SizedBox(
+        child: Center(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+
+              Lottie.asset(
+                "assets/animations/splash_screen.json",
+                repeat: true,
+                reverse: true,
+                height: 250,
+                width: 250
+              ),
+        
+              const Padding(
+                padding: EdgeInsets.all(50.0),
+                child: LinearProgressIndicator(
+                  borderRadius: BorderRadius.all(Radius.circular(10)),
+                ),
+              ),
+        
+            ],
+          ),
+        )
+      )
+    );
+  }
+
 }

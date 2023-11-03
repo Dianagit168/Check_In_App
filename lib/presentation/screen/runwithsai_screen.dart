@@ -6,28 +6,57 @@ class RunWithSaiScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: normalAppBar(context, titleAppbar: "Crew Check In", isLeading: false),
-      body: SafeArea(
-        child: Center(
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
+      body: Container(
+        height: MediaQuery.of(context).size.height,
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            fit: BoxFit.cover,
+            alignment: Alignment.centerRight,
+            image: AssetImage('assets/images/runwithsai.png'),
+          ),
+        ),
+        child: Glassmorphism(
+          blur: 5,
+          opacity: 0.3,
+          radius: 0,
+          borderWidth: 0,
+          child: Container(
+            padding: const EdgeInsets.all(10.0),
+            decoration: BoxDecoration(
+              color: Colors.black.withOpacity(0.2),
+            ),
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-
-                const Spacer(),
+        
+                const SizedBox(height: 75),
                 
+                const Text(
+                  'AnyTicket: Crew Check In',
+                  style: TextStyle(
+                    fontSize: 23,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                ),
+        
+                const Spacer(),
+                    
                 Card(
                   elevation: 10,
                   clipBehavior: Clip.antiAliasWithSaveLayer,
                   child: InkWell(
-                    onTap: () => Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => 
-                        // const RedeemTicketScreen(),
-                        const ScanQr(eventTitle: 'Run With Sai',),
-                      )
-                    ),
+                    onTap: () {
+                      context.pushNamed(RouterName.scanCameraScreen);
+                    },
+                    // onTap: () => Navigator.push(
+                    //   context,
+                    //   MaterialPageRoute(
+                    //     builder: (context) => 
+                    //     // const RedeemTicketScreen(),
+                    //     const ScanQrScreen(),
+                    //   )
+                    // ),
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
@@ -41,7 +70,7 @@ class RunWithSaiScreen extends StatelessWidget {
                           color: const Color.fromRGBO(130, 102, 224, 1),
                           child: Row(
                             children: [
-      
+                            
                               Padding(
                                 padding: const EdgeInsets.all(10.0),
                                 child: Container(
@@ -77,9 +106,9 @@ class RunWithSaiScreen extends StatelessWidget {
                                       color: Colors.white,
                                     ),
                                   ),
-      
+                            
                                   SizedBox(height: 5),
-      
+                            
                                   Row(
                                     children: [
                                       Icon(
@@ -108,25 +137,26 @@ class RunWithSaiScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-
+            
                 const Spacer(),
-
+            
                 ElevatedButtonCust(
                   tit: 'Log Out',
-                  btnColor: const Color.fromARGB(255, 235, 53, 53),
-                  textColor: const Color.fromARGB(255, 255, 255, 255),
+                  btnColor: const Color.fromARGB(255, 255, 255, 255),
+                  textColor: const Color.fromARGB(255, 235, 53, 53),
                   iconColor: const Color.fromARGB(255, 255, 255, 255),
                   borderColor: const Color.fromRGBO(130, 102, 224, 0.5),
                   btnHigh: 50,
                   onNavigator: () {
                     SecureStorage.clearAllSecure().then((value) {
-                      Navigator.pushReplacement(context,
-                        MaterialPageRoute (builder: (context) {return LoginScreen();})
-                      ); 
+                      context.goNamed(RouterName.loginScreen);
                     });
                     
                   },
                 ),
+
+                const SizedBox(height: 50),
+                
               ],
             ),
           ),

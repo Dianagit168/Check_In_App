@@ -1,4 +1,4 @@
-package com.example.check_in_app
+package com.koompi.anyticket
 
 import io.flutter.embedding.android.FlutterActivity
 
