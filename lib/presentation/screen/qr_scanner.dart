@@ -11,10 +11,10 @@ class ScanQrScreenState extends State<ScanQrScreen> {
   final TicketUcImpl _ticketUcImpl = TicketUcImpl();
 
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
-  late QRViewController _qrViewController;
+  
 
   bool _flashOn = false;
-  bool isScanning = true;
+  // bool isScanning = true;
 
   @override
   void initState() {
@@ -23,28 +23,32 @@ class ScanQrScreenState extends State<ScanQrScreen> {
 
   @override
   void dispose() {
-    _qrViewController.dispose();
+    _ticketUcImpl.qrViewController.dispose();
     super.dispose();
   }
 
   void _onQrViewCreated(QRViewController controller) {
-    _qrViewController = controller;
+    _ticketUcImpl.qrViewController = controller;
 
-    _qrViewController.scannedDataStream.listen((event) async {
-      if (isScanning) {
+    _ticketUcImpl.qrViewController.scannedDataStream.listen((event) async {
+      if (_ticketUcImpl.isScanning) {
         setState(() {
-          isScanning = false;
+          _ticketUcImpl.isScanning = false;
         });
 
-        List<String> parts = event.code!.split('/');
-        String id = parts.last.split('-').first;
+          // Split the string by '/'
+          List<String> parts = event.code!.split('/');
 
-        print(event.code);
+          // Get the last part of the list
+          String id = parts.last;
+
+          print(id);
 
         // ModernDialog().dialogLoading(context);
 
         _ticketUcImpl.getTicketData(id).then((value) {
-          Navigator.pop(context);
+
+          // Navigator.pop(context);
 
           Navigator.push(
             context,
@@ -56,15 +60,15 @@ class ScanQrScreenState extends State<ScanQrScreen> {
               ),
             ),
           ).then((_) {
-            _qrViewController.resumeCamera().then((value) {
+            _ticketUcImpl.qrViewController.resumeCamera().then((value) {
               setState(() {
-                isScanning = true;
+                _ticketUcImpl.isScanning = true;
               });
             });
           });
         });
 
-        _qrViewController.pauseCamera();
+        _ticketUcImpl.qrViewController.pauseCamera();
 
       }
     });
@@ -96,8 +100,7 @@ class ScanQrScreenState extends State<ScanQrScreen> {
             left: MediaQuery.of(context).size.width / 2.25,
             child: IconButton(
               onPressed: () {
-                debugPrint("Controller is dead?: $_qrViewController");
-                _qrViewController.toggleFlash();
+                _ticketUcImpl.qrViewController.toggleFlash();
                 setState(() {
                   _flashOn = !_flashOn;
                 });
@@ -109,25 +112,6 @@ class ScanQrScreenState extends State<ScanQrScreen> {
             ),
           ),
 
-          isScanning == false ? Positioned(
-            top: 25,
-            right: 10,
-            child: IconButton(
-              onPressed: () {
-                setState(() {
-                  _qrViewController.resumeCamera().then((value) {
-                    setState(() {
-                      isScanning = true;
-                    });
-                  });
-                });
-              },
-              color: Colors.white,
-              iconSize: 36,
-              icon: const Icon(LucideIcons.refreshCcw),
-              alignment: Alignment.center,
-            ),
-          ) : const SizedBox(),
         ],
       ),
     );

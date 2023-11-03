@@ -46,8 +46,11 @@ class PostRestApi {
 
     return SecureStorage.readSecure(DbKey.bearerToken).then((token) async {
       return await http.post(
-        Uri.parse("${dotenv.env["API_URL"]}${dotenv.env["API_REGISTER"]}?token=$token"),
-        headers: conceteHeader(),
+        Uri.parse("${dotenv.env["API_URL"]}${dotenv.env["API_REDEEM"]}"),
+        headers: conceteHeader(
+          key: "x-api-key",
+          value: token
+        ),
         body: redeemJson
       );
     });

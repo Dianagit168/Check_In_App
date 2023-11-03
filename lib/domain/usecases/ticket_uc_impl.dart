@@ -9,6 +9,10 @@ class TicketUcImpl {
   String jsonDataRedeem = "";
   final ValueNotifier<TicketModel> ticketModel = ValueNotifier(TicketModel());
 
+  late QRViewController qrViewController;
+
+  bool isScanning = true;
+
   set setBuildContext(BuildContext ctx) {
     _context = ctx;
   }
@@ -19,16 +23,23 @@ class TicketUcImpl {
 
 
   Future<TicketModel> queryTicketData(String id) async {
-    final data = await _getRestApi.getTicketApi(id: id);
 
-    decode = json.decode(data.body);
+    try {
+      final data = await _getRestApi.getTicketApi(id: id);
 
-    if (data.statusCode == 201) {
-      return TicketModel.fromJson(jsonDecode(data.body));
-    } else {
-      _handleError('Failed to load queryTicketData');
-      throw Exception('Failed to load queryTicketData');
+      decode = json.decode(data.body);
+
+      if (data.statusCode == 201) {
+        return TicketModel.fromJson(jsonDecode(data.body));
+      } else {
+        _handleError('Failed to load queryTicketData');
+        throw Exception('Failed to load queryTicketData');
+      }
+    } catch (e) {
+      _invalidError();
+      throw Exception('Failed Invalid QR Code');
     }
+    
   }
 
 
@@ -41,8 +52,8 @@ class TicketUcImpl {
       _showSuccessAlert("Ticket Redeemed Successfully");
     } else {
       _handleError('Failed to redeemTicket');
-      throw Exception('Failed to redeemTicket');
     }
+    
   }
 
   void _showSuccessAlert(String message) {
@@ -60,5 +71,13 @@ class TicketUcImpl {
 
   void _handleError(String errorMessage) {
     ModernDialog().errorMsg(_context, decode['message']);
+  }
+
+  void _invalidError() {
+    ModernDialog().errorMsg(_context, "Failed Invalid QR Code").then((value) {
+      qrViewController.resumeCamera().then((value) {
+        isScanning = true;
+      });
+    });
   }
 }

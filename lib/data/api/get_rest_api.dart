@@ -21,8 +21,11 @@ class GetRestApi {
       return SecureStorage.readSecure(DbKey.bearerToken).then((token) async {
 
         return await http.get(
-          Uri.parse("${dotenv.env["API_URL"]}api/ticket/order/$id?token=$token"),
-          headers: conceteHeader()
+          Uri.parse("${dotenv.env["API_URL"]}api/ticket/order/$id"),
+          headers: conceteHeader(
+            key: "x-api-key",
+            value: token
+          )
         );
         
       });

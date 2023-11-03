@@ -35,6 +35,7 @@ class RedeemTicketScreen extends StatelessWidget {
                 ),
               ),
             ),
+            
             ticketModel.data!.isEmpty
                 ? const Padding(
                     padding: EdgeInsets.all(12.0),
@@ -102,27 +103,26 @@ class RedeemTicketScreen extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          data.title!,
-                          style: const TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                        Text(
-                          "Total: ${data.qty}/Redeemed: ${data.used}",
-                          style: const TextStyle(fontSize: 13),
-                        ),
-                      ],
-                    ),
-                    if (data.qty != data.used)
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width,
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 10),
-                          child: _amountBtn(ticketUcImpl.redeemItems, index),
-                        ),
+                    ...[
+                      // Text(
+                      //   data.title!,
+                      //   style: const TextStyle(fontWeight: FontWeight.bold),
+                      // ),
+                      Text(
+                        "Total: ${data.qty}/Redeemed: ${data.used}",
+                        style: const TextStyle(fontSize: 13),
                       ),
+                    ],
+
+                    // if (data.qty != data.used)
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 10),
+                        child: _amountBtn(ticketUcImpl.redeemItems, index),
+                      ),
+                    ),
+                    
                   ],
                 ),
               );
@@ -157,6 +157,8 @@ class RedeemTicketScreen extends StatelessWidget {
 
         // Convert newData to JSON for printing or further usage
         ticketUcImpl.jsonDataRedeem = jsonEncode(newData);
+
+        print(ticketUcImpl.jsonDataRedeem);
       },
       decoration: const QtyDecorationProps(
         isBordered: true,
