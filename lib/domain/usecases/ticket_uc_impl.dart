@@ -9,7 +9,7 @@ class TicketUcImpl {
   String jsonDataRedeem = "";
   final ValueNotifier<TicketModel> ticketModel = ValueNotifier(TicketModel());
 
-  late QRViewController qrViewController;
+  QRViewController? qrViewController;
 
   bool isScanning = true;
 
@@ -60,8 +60,10 @@ class TicketUcImpl {
     QuickAlert.show(
       context: _context,
       type: QuickAlertType.success,
+      barrierColor: const Color.fromRGBO(130, 102, 224, 0.2),
       title: message,
       confirmBtnText: "Close",
+      confirmBtnColor: const Color.fromRGBO(130, 102, 224, 1),
       onConfirmBtnTap: () async {
         Navigator.pop(_context);
         Navigator.pop(_context);
@@ -74,8 +76,9 @@ class TicketUcImpl {
   }
 
   void _invalidError() {
+    Navigator.pop(_context);
     ModernDialog().errorMsg(_context, "Failed Invalid QR Code").then((value) {
-      qrViewController.resumeCamera().then((value) {
+      qrViewController!.resumeCamera().then((value) {
         isScanning = true;
       });
     });

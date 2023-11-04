@@ -9,46 +9,47 @@ class ScanQrScreen extends StatefulWidget {
 
 class ScanQrScreenState extends State<ScanQrScreen> {
   final TicketUcImpl _ticketUcImpl = TicketUcImpl();
-
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
-  
-
   bool _flashOn = false;
-  // bool isScanning = true;
-
-  @override
-  void initState() {
-    super.initState();
-  }
 
   @override
   void dispose() {
-    _ticketUcImpl.qrViewController.dispose();
+    _ticketUcImpl.qrViewController?.dispose();
     super.dispose();
   }
 
   void _onQrViewCreated(QRViewController controller) {
+    print("create qr view");
     _ticketUcImpl.qrViewController = controller;
 
-    _ticketUcImpl.qrViewController.scannedDataStream.listen((event) async {
+    _ticketUcImpl.qrViewController!.scannedDataStream.listen((event) async {
+      print("scannedDataStream");
+
       if (_ticketUcImpl.isScanning) {
         setState(() {
           _ticketUcImpl.isScanning = false;
         });
 
-          // Split the string by '/'
-          List<String> parts = event.code!.split('/');
+        // Split the string by '/'
+        List<String> parts = event.code!.split('/');
 
-          // Get the last part of the list
-          String id = parts.last;
+        // Get the last part of the list
+        String id = parts.last;
 
-          print(id);
+        print(id);
 
-        // ModernDialog().dialogLoading(context);
+        QuickAlert.show(
+          context: context,
+          type: QuickAlertType.loading,
+          barrierColor: const Color.fromRGBO(130, 102, 224, 0.2),
+          barrierDismissible: false,
+          disableBackBtn: true,
+        );
 
         _ticketUcImpl.getTicketData(id).then((value) {
+          print("getTicketData");
 
-          // Navigator.pop(context);
+          Navigator.pop(context);
 
           Navigator.push(
             context,
@@ -60,7 +61,7 @@ class ScanQrScreenState extends State<ScanQrScreen> {
               ),
             ),
           ).then((_) {
-            _ticketUcImpl.qrViewController.resumeCamera().then((value) {
+            _ticketUcImpl.qrViewController!.resumeCamera().then((value) {
               setState(() {
                 _ticketUcImpl.isScanning = true;
               });
@@ -68,17 +69,15 @@ class ScanQrScreenState extends State<ScanQrScreen> {
           });
         });
 
-        _ticketUcImpl.qrViewController.pauseCamera();
-
+        _ticketUcImpl.qrViewController!.pauseCamera();
       }
     });
   }
 
   @override
   Widget build(BuildContext context) {
-
     _ticketUcImpl.setBuildContext = context;
-    
+
     return Scaffold(
       appBar: normalAppBar(context, titleAppbar: "QR Scanner"),
       body: Stack(
@@ -100,7 +99,7 @@ class ScanQrScreenState extends State<ScanQrScreen> {
             left: MediaQuery.of(context).size.width / 2.25,
             child: IconButton(
               onPressed: () {
-                _ticketUcImpl.qrViewController.toggleFlash();
+                _ticketUcImpl.qrViewController!.toggleFlash();
                 setState(() {
                   _flashOn = !_flashOn;
                 });
@@ -111,7 +110,6 @@ class ScanQrScreenState extends State<ScanQrScreen> {
               alignment: Alignment.center,
             ),
           ),
-
         ],
       ),
     );

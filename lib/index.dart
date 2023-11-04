@@ -17,6 +17,7 @@ export 'package:flutter_dotenv/flutter_dotenv.dart';
 export 'package:input_quantity/input_quantity.dart';
 export 'package:flutter_secure_storage/flutter_secure_storage.dart';
 export 'package:go_router/go_router.dart';
+export 'package:flutter_svg/flutter_svg.dart';
 
 // ====================> Data API <====================
 export 'package:check_in_app/data/api/post_rest_api.dart';
@@ -37,10 +38,7 @@ export 'package:check_in_app/domain/models/redeem_item_m.dart';
 // ====================> Presentation Screen <====================
 export 'package:check_in_app/presentation/screen/register_screen.dart';
 export 'package:check_in_app/presentation/screen/login_screen.dart';
-export 'package:check_in_app/presentation/screen/main_screen.dart';
 export 'package:check_in_app/presentation/screen/qr_scanner.dart';
-export 'package:check_in_app/presentation/screen/category_event_screen.dart';
-export 'package:check_in_app/presentation/screen/event_screen.dart';
 export 'package:check_in_app/presentation/screen/runwithsai_screen.dart';
 export 'package:check_in_app/presentation/screen/redeem_ticket_screen.dart';
 

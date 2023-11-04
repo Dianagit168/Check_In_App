@@ -27,7 +27,14 @@ class AuthUcImpl {
   }
 
   Future<void> loginRequest({required String email, required String password}) async {
-    ModernDialog().dialogLoading(_context!);
+    // ModernDialog().dialogLoading(_context!);
+    QuickAlert.show(
+      context: _context!, 
+      type: QuickAlertType.loading,
+      barrierColor: const Color.fromRGBO(130, 102, 224, 0.2),
+      barrierDismissible: false,
+      disableBackBtn: true,
+    );
 
     try {
       if (email.isNotEmpty && password.isNotEmpty) {
@@ -57,7 +64,14 @@ class AuthUcImpl {
     required String password,
     required String confirmPassword,
   }) async {
-    ModernDialog().dialogLoading(_context!);
+    // ModernDialog().dialogLoading(_context!);
+    QuickAlert.show(
+      context: _context!, 
+      type: QuickAlertType.loading,
+      barrierColor: const Color.fromRGBO(130, 102, 224, 0.2),
+      barrierDismissible: false,
+      disableBackBtn: true,
+    );
 
     try {
       if (name.isNotEmpty && email.isNotEmpty && password.isNotEmpty && confirmPassword.isNotEmpty) {
