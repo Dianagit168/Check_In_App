@@ -89,7 +89,8 @@ class ScanQrScreenState extends State<ScanQrScreen> {
             overlay: QrScannerOverlayShape(
               borderColor: Theme.of(context).primaryColor,
               borderRadius: 25,
-              borderLength: 36,
+              borderLength: 50,
+              borderWidth: 10,
               cutOutSize: MediaQuery.of(context).size.width / 1.25,
               cutOutBottomOffset: MediaQuery.of(context).size.height / 20,
             ),

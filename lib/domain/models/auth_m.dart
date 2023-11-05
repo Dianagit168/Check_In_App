@@ -5,8 +5,8 @@ class AuthModel {
   Map<String, dynamic>? decode;
   
   final TextEditingController nameController = TextEditingController();
-  final TextEditingController emailController = TextEditingController(text: "developer@bookme.plus");
-  final TextEditingController passwordController = TextEditingController(text: "9TZ1mJluJ+PbgA==");
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
   final TextEditingController confirmpasswordController = TextEditingController();
 
 }
