@@ -9,7 +9,7 @@ class TicketUcImpl {
   String jsonDataRedeem = "";
   final ValueNotifier<TicketModel> ticketModel = ValueNotifier(TicketModel());
 
-  QRViewController? qrViewController;
+  late QRViewController qrViewController;
 
   bool isScanning = true;
 
@@ -78,7 +78,7 @@ class TicketUcImpl {
   void _invalidError() {
     Navigator.pop(_context);
     ModernDialog().errorMsg(_context, "Failed Invalid QR Code").then((value) {
-      qrViewController!.resumeCamera().then((value) {
+      qrViewController.resumeCamera().then((value) {
         isScanning = true;
       });
     });

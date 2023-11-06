@@ -58,20 +58,32 @@ class SplashScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
 
-              Lottie.asset(
-                "assets/animations/splash_screen.json",
-                repeat: true,
-                reverse: true,
-                height: 250,
-                width: 250
-              ),
-        
-              const Padding(
-                padding: EdgeInsets.all(50.0),
-                child: LinearProgressIndicator(
-                  borderRadius: BorderRadius.all(Radius.circular(10)),
+              const Spacer(),
+
+              ...[
+                Lottie.asset(
+                  "assets/animations/splash_screen.json",
+                  repeat: true,
+                  reverse: true,
+                  height: 250,
+                  width: 250
                 ),
+          
+                const Padding(
+                  padding: EdgeInsets.all(25.0),
+                  child: LinearProgressIndicator(
+                    borderRadius: BorderRadius.all(Radius.circular(10)),
+                  ),
+                ),
+              ],
+
+              const Spacer(),
+
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 50),
+                child: Image.asset("assets/images/powered-by-koompi.png"),
               ),
+              
         
             ],
           ),

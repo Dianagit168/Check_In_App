@@ -23,11 +23,11 @@ final router = GoRouter(
       path: RouterName.loginScreen,
       builder: (context, state) => LoginScreen(),
     ),
-    GoRoute(
-      name: RouterName.registerScreen,
-      path: RouterName.registerScreen,
-      builder: (context, state) => RegisterScreen(),
-    ),
+    // GoRoute(
+    //   name: RouterName.registerScreen,
+    //   path: RouterName.registerScreen,
+    //   builder: (context, state) => RegisterScreen(),
+    // ),
     GoRoute(
       name: RouterName.mainScreen,
       path: RouterName.mainScreen,

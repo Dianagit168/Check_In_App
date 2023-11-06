@@ -33,7 +33,8 @@ class RunWithSaiScreen extends StatelessWidget {
                 _buildEventCard(context),
                 const Spacer(),
                 _buildLogoutButton(context),
-                const SizedBox(height: 50),
+                
+                poweredByKoompiLogoWhite(),
               ],
             ),
           ),
@@ -56,6 +57,7 @@ class RunWithSaiScreen extends StatelessWidget {
   Widget _buildEventCard(BuildContext context) {
     return Card(
       elevation: 10,
+      color: const Color.fromRGBO(130, 102, 224, 1 ),
       clipBehavior: Clip.antiAliasWithSaveLayer,
       child: InkWell(
         onTap: () {
@@ -76,78 +78,68 @@ class RunWithSaiScreen extends StatelessWidget {
   }
 
   Widget _buildEventDetails(BuildContext context) {
-    return Container(
-      height: 100,
-      width: double.infinity,
-      color: const Color.fromRGBO(130, 102, 224, 1),
-      child: Row(
-        children: [
-          _buildDateContainer(context),
-          _buildEventInfo(),
-        ],
-      ),
+    return Row(
+      children: [
+        _buildDateContainer(context),
+        _buildEventInfo(),
+      ],
     );
   }
 
   Widget _buildDateContainer(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(10.0),
-      child: Container(
-        width: MediaQuery.of(context).size.width / 5,
-        padding: const EdgeInsets.all(6),
-        decoration: const BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(16)),
-          color: Color.fromRGBO(91, 81, 153, 1),
-        ),
-        child: const Center(
-          child: Text(
-            '12 Nov 2023',
-            style: TextStyle(
-              fontSize: 15,
-              fontWeight: FontWeight.bold,
-              color: Colors.white,
-            ),
-            textAlign: TextAlign.center,
+    return Container(
+      padding: const EdgeInsets.all(15),
+      margin: const EdgeInsets.all(10.0),
+      decoration: const BoxDecoration(
+        borderRadius: BorderRadius.all(Radius.circular(16)),
+        color: Color.fromRGBO(91, 81, 153, 1),
+      ),
+      child: const Center(
+        child: Text(
+          '12 Nov\n2023',
+          style: TextStyle(
+            fontSize: 15,
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
           ),
+          textAlign: TextAlign.center,
         ),
       ),
     );
   }
 
   Widget _buildEventInfo() {
-    return const Expanded(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(
-            'Run With Sai',
-            style: TextStyle(
-              fontSize: 17,
-              fontWeight: FontWeight.bold,
+    return const Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text(
+          'Run With Sai',
+          style: TextStyle(
+            fontSize: 17,
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
+          ),
+        ),
+        SizedBox(height: 5),
+        Row(
+          children: [
+            Icon(
+              LucideIcons.mapPin,
               color: Colors.white,
             ),
-          ),
-          SizedBox(height: 5),
-          Row(
-            children: [
-              Icon(
-                LucideIcons.mapPin,
+            SizedBox(width: 5),
+            Text(
+              'Kep City',
+              style: TextStyle(
+                fontSize: 15,
+                fontWeight: FontWeight.w500,
                 color: Colors.white,
               ),
-              SizedBox(width: 5),
-              Text(
-                'Kep City',
-                style: TextStyle(
-                  fontSize: 15,
-                  fontWeight: FontWeight.w500,
-                  color: Colors.white,
-                ),
-              ),
-            ],
-          ),
-        ],
-      ),
+            ),
+          ],
+        ),
+      ],
     );
   }
 

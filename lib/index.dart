@@ -48,3 +48,4 @@ export 'package:check_in_app/presentation/widget/appbar_cus.dart';
 export 'package:check_in_app/presentation/widget/alert_dialog_cus.dart';
 export 'package:check_in_app/presentation/widget/glassmorphism_cus.dart';
 export 'package:check_in_app/presentation/widget/textfield_cus.dart';
+export 'package:check_in_app/presentation/widget/footer_powered_by.dart';

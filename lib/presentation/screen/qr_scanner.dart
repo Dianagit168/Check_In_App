@@ -14,7 +14,7 @@ class ScanQrScreenState extends State<ScanQrScreen> {
 
   @override
   void dispose() {
-    _ticketUcImpl.qrViewController?.dispose();
+    _ticketUcImpl.qrViewController.dispose();
     super.dispose();
   }
 
@@ -22,7 +22,7 @@ class ScanQrScreenState extends State<ScanQrScreen> {
     print("create qr view");
     _ticketUcImpl.qrViewController = controller;
 
-    _ticketUcImpl.qrViewController!.scannedDataStream.listen((event) async {
+    _ticketUcImpl.qrViewController.scannedDataStream.listen((event) async {
       print("scannedDataStream");
 
       if (_ticketUcImpl.isScanning) {
@@ -61,7 +61,7 @@ class ScanQrScreenState extends State<ScanQrScreen> {
               ),
             ),
           ).then((_) {
-            _ticketUcImpl.qrViewController!.resumeCamera().then((value) {
+            _ticketUcImpl.qrViewController.resumeCamera().then((value) {
               setState(() {
                 _ticketUcImpl.isScanning = true;
               });
@@ -69,7 +69,7 @@ class ScanQrScreenState extends State<ScanQrScreen> {
           });
         });
 
-        _ticketUcImpl.qrViewController!.pauseCamera();
+        _ticketUcImpl.qrViewController.pauseCamera();
       }
     });
   }
@@ -95,12 +95,13 @@ class ScanQrScreenState extends State<ScanQrScreen> {
               cutOutBottomOffset: MediaQuery.of(context).size.height / 20,
             ),
           ),
+          
           Positioned(
             bottom: MediaQuery.of(context).size.height / 4.5,
             left: MediaQuery.of(context).size.width / 2.25,
             child: IconButton(
               onPressed: () {
-                _ticketUcImpl.qrViewController!.toggleFlash();
+                _ticketUcImpl.qrViewController.toggleFlash();
                 setState(() {
                   _flashOn = !_flashOn;
                 });
@@ -109,6 +110,14 @@ class ScanQrScreenState extends State<ScanQrScreen> {
               iconSize: 36,
               icon: Icon(_flashOn ? Icons.flash_on : Icons.flash_off),
               alignment: Alignment.center,
+            ),
+          ),
+
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 50.0),
+              child: Image.asset("assets/images/powered-by-koompi-white.png"),
             ),
           ),
         ],

@@ -42,11 +42,14 @@ class LoginScreen extends StatelessWidget {
           children: [
             const SizedBox(height: 75),
             _buildHeader(),
-            const SizedBox(height: 25),
-            _buildForm(context),
             const Spacer(),
-            _buildRegisterButton(context),
-            const SizedBox(height: 50),
+            _buildForm(context),
+            // const SizedBox(height: 50),
+            // _buildRegisterButton(context),
+            
+            const Spacer(),
+
+            poweredByKoompiLogoWhite(),
           ],
         ),
       ),
