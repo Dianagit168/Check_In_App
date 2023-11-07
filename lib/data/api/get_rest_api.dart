@@ -31,5 +31,21 @@ class GetRestApi {
       });
   
   }
+
+  Future<http.Response> getTicketCount() async {
+
+      return SecureStorage.readSecure(DbKey.bearerToken).then((token) async {
+
+        return await http.get(
+          Uri.parse("${dotenv.env["API_URL"]}api/ticket/data"),
+          headers: conceteHeader(
+            key: "x-api-key",
+            value: token
+          )
+        );
+        
+      });
+  
+  }
   
 }

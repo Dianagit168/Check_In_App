@@ -115,10 +115,7 @@ class ScanQrScreenState extends State<ScanQrScreen> {
 
           Align(
             alignment: Alignment.bottomCenter,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 50.0),
-              child: Image.asset("assets/images/powered-by-koompi-white.png"),
-            ),
+            child: poweredByKoompiLogoWhite(),
           ),
         ],
       ),

@@ -31,7 +31,7 @@ final router = GoRouter(
     GoRoute(
       name: RouterName.mainScreen,
       path: RouterName.mainScreen,
-      builder: (context, state) => const RunWithSaiScreen(),
+      builder: (context, state) => RunWithSaiScreen(),
     ),
     GoRoute(
       name: RouterName.scanCameraScreen,

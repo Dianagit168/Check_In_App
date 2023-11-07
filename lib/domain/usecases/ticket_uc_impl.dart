@@ -9,6 +9,12 @@ class TicketUcImpl {
   String jsonDataRedeem = "";
   final ValueNotifier<TicketModel> ticketModel = ValueNotifier(TicketModel());
 
+  final ValueNotifier<CountTicketModel> ticketCountModel = ValueNotifier(CountTicketModel());
+
+  final ValueNotifier<int> ticketCount = ValueNotifier(0);
+
+  final TextEditingController ticketController = TextEditingController();
+
   late QRViewController qrViewController;
 
   bool isScanning = true;
@@ -42,6 +48,32 @@ class TicketUcImpl {
     
   }
 
+  Future<void> getCountTicketData() async {
+    ticketCountModel.value = await countTicketData();
+  }
+
+
+  Future<CountTicketModel> countTicketData() async {
+
+    try {
+      final data = await _getRestApi.getTicketCount();
+
+      decode = json.decode(data.body);
+
+      if (data.statusCode == 200) {
+        return CountTicketModel.fromJson(jsonDecode(data.body));
+      } else {
+        _handleError('Failed to load queryTicketData');
+        throw Exception('Failed to load queryTicketData');
+      }
+    } catch (e) {
+      _invalidError();
+      throw Exception('Failed Invalid QR Code');
+    }
+    
+  }
+
+
 
   Future<void> redeemTicket(String redeemItem) async {
     final data = await _postRestApi.redeemTicketApi(redeemItem);
@@ -57,22 +89,41 @@ class TicketUcImpl {
   }
 
   void _showSuccessAlert(String message) {
-    QuickAlert.show(
-      context: _context,
-      type: QuickAlertType.success,
-      barrierColor: const Color.fromRGBO(130, 102, 224, 0.2),
-      title: message,
-      confirmBtnText: "Close",
-      confirmBtnColor: const Color.fromRGBO(130, 102, 224, 1),
-      onConfirmBtnTap: () async {
-        Navigator.pop(_context);
-        Navigator.pop(_context);
-      },
+    ModernDialog().successMsg(
+      _context,
+      "Ticket Redeemed\nSuccessfully",
+      barrierDismissible: false,
+      action2: ElevatedButtonCust(
+        tit: 'Close',
+        btnColor: const Color.fromRGBO(93, 84, 217, 1),
+        textColor: const Color.fromARGB(255, 255, 255, 255),
+        borderColor: const Color.fromRGBO(130, 102, 224, 0.5),
+        btnHigh: 50,
+        onNavigator: () {
+          Navigator.pop(_context);
+          Navigator.pop(_context);
+        },
+      ),
     );
   }
 
   void _handleError(String errorMessage) {
-    ModernDialog().errorMsg(_context, decode['message']);
+    ModernDialog().errorMsg(
+      _context, 
+      decode['message'],
+      barrierDismissible: false,
+      action2: ElevatedButtonCust(
+        tit: 'Close',
+        btnColor: const Color.fromRGBO(93, 84, 217, 1),
+        textColor: const Color.fromARGB(255, 255, 255, 255),
+        borderColor: const Color.fromRGBO(130, 102, 224, 0.5),
+        btnHigh: 50,
+        onNavigator: () {
+          Navigator.pop(_context);
+          Navigator.pop(_context);
+        },
+      ),
+    );
   }
 
   void _invalidError() {

@@ -11,7 +11,6 @@ class ElevatedButtonCust extends StatelessWidget {
     this.textColor = Colors.white,
     this.iconColor = Colors.white, 
     this.iconData,
-    this.disabled = false,
   }) : super(key: key);
   final String? tit;
   final double? btnHigh;
@@ -21,11 +20,10 @@ class ElevatedButtonCust extends StatelessWidget {
   final Color? iconColor;
   final IconData? iconData;
   final void Function()? onNavigator;
-  final bool disabled;
 
   @override
   Widget build(BuildContext context) {
-    return disabled == true ? const SizedBox() : Container(
+    return Container(
       height: btnHigh,
       decoration: BoxDecoration(
         border: Border.all(
@@ -54,7 +52,7 @@ class ElevatedButtonCust extends StatelessWidget {
             ),
             Text(
               tit!,
-              style: TextStyle(
+              style: GoogleFonts.poppins(
                 color: textColor!,
                 fontSize: 15,
                 fontWeight: FontWeight.bold

@@ -57,20 +57,20 @@ class LoginScreen extends StatelessWidget {
   }
 
   Widget _buildHeader() {
-    return const Padding(
-      padding: EdgeInsets.all(15.0),
+    return Padding(
+      padding: const EdgeInsets.all(15.0),
       child: Column(
         children: [
           Text(
             'Welcome RUN WITH SAI',
-            style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.white),
+            style: GoogleFonts.poppins(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.white),
           ),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           Text(
             'Crew Check-In',
-            style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold, color: Colors.white),
+            style: GoogleFonts.poppins(fontSize: 17, fontWeight: FontWeight.bold, color: Colors.white),
           ),
-          SizedBox(height: 30),
+          const SizedBox(height: 30),
         ],
       ),
     );
@@ -92,9 +92,9 @@ class LoginScreen extends StatelessWidget {
             ElevatedButtonCust(
               tit: 'Login',
               iconData: LucideIcons.logIn,
-              textColor: const Color.fromRGBO(130, 102, 224, 1),
-              iconColor: const Color.fromRGBO(130, 102, 224, 1),
-              borderColor: const Color.fromRGBO(130, 102, 224, 1),
+              textColor: const Color.fromRGBO(93, 84, 217, 1),
+              iconColor: const Color.fromRGBO(93, 84, 217, 1),
+              borderColor: const Color.fromRGBO(93, 84, 217, 1),
               btnHigh: 50,
               onNavigator: () async {
                 await authUcImpl.loginRequest(
@@ -119,16 +119,16 @@ class LoginScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildRegisterButton(BuildContext context) {
-    return ElevatedButtonCust(
-      tit: "Don't have an account? CLICK HERE",
-      textColor: const Color.fromRGBO(130, 102, 224, 1),
-      iconColor: const Color.fromRGBO(130, 102, 224, 1),
-      borderColor: const Color.fromRGBO(130, 102, 224, 1),
-      btnHigh: 50,
-      onNavigator: () {
-        context.pushNamed(RouterName.registerScreen);
-      },
-    );
-  }
+  // Widget _buildRegisterButton(BuildContext context) {
+  //   return ElevatedButtonCust(
+  //     tit: "Don't have an account? CLICK HERE",
+  //     textColor: const Color.fromRGBO(93, 84, 217, 1),
+  //     iconColor: const Color.fromRGBO(93, 84, 217, 1),
+  //     borderColor: const Color.fromRGBO(93, 84, 217, 1),
+  //     btnHigh: 50,
+  //     onNavigator: () {
+  //       context.pushNamed(RouterName.registerScreen);
+  //     },
+  //   );
+  // }
 }

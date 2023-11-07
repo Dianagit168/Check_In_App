@@ -18,6 +18,9 @@ export 'package:input_quantity/input_quantity.dart';
 export 'package:flutter_secure_storage/flutter_secure_storage.dart';
 export 'package:go_router/go_router.dart';
 export 'package:flutter_svg/flutter_svg.dart';
+export 'package:animated_flip_counter/animated_flip_counter.dart';
+export 'package:google_fonts/google_fonts.dart';
+export 'package:slidable_button/slidable_button.dart';
 
 // ====================> Data API <====================
 export 'package:check_in_app/data/api/post_rest_api.dart';
@@ -34,6 +37,7 @@ export 'package:check_in_app/domain/models/event_m.dart';
 export 'package:check_in_app/domain/models/auth_m.dart';
 export 'package:check_in_app/domain/models/ticket_m.dart';
 export 'package:check_in_app/domain/models/redeem_item_m.dart';
+export 'package:check_in_app/domain/models/count_ticket_m.dart';
 
 // ====================> Presentation Screen <====================
 export 'package:check_in_app/presentation/screen/register_screen.dart';

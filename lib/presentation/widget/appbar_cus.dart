@@ -12,7 +12,7 @@ PreferredSizeWidget normalAppBar(
     automaticallyImplyLeading: isLeading,
     title: Text(
       titleAppbar!,
-      style: const TextStyle(
+      style: GoogleFonts.poppins(
         fontSize: 24,
         fontWeight: FontWeight.bold
       ),

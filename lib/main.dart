@@ -79,11 +79,7 @@ class SplashScreen extends StatelessWidget {
 
               const Spacer(),
 
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 50),
-                child: Image.asset("assets/images/powered-by-koompi.png"),
-              ),
-              
+              poweredByKoompiLogoBlack(),
         
             ],
           ),

@@ -12,7 +12,7 @@ Widget textfieldWidget(
       children: [
         Text(
           title,
-          style: const TextStyle(
+          style: GoogleFonts.poppins(
             fontSize: 17,
             fontWeight: FontWeight.bold,
             color: Colors.white,

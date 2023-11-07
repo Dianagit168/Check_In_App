@@ -24,6 +24,10 @@ class RedeemTicketScreen extends StatelessWidget {
       );
     }).toList();
 
+    print("variant ${ticketModel.data![0].id}");
+
+    print(dotenv.env["API_URL"]);
+
     return Scaffold(
       appBar: normalAppBar(context, titleAppbar: "Redeem Ticket"),
       body: SingleChildScrollView(
@@ -47,25 +51,38 @@ class RedeemTicketScreen extends StatelessWidget {
           ],
         ),
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: ticketModel.data!.isEmpty
+      bottomNavigationBar: ticketModel.data!.every((item) => item.qty! == item.used!)
           ? const SizedBox()
-          : Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: ElevatedButtonCust(
-                tit: 'REDEEM TICKET',
-                iconData: LucideIcons.ticket,
-                textColor: const Color.fromRGBO(130, 102, 224, 1),
-                iconColor: const Color.fromRGBO(130, 102, 224, 1),
-                borderColor: const Color.fromRGBO(130, 102, 224, 1),
-                btnHigh: 50,
-                onNavigator: () async {
+          : Container(
+            color: Colors.white,
+            padding: const EdgeInsets.only(left: 10, right: 10, bottom: 50, top: 0),
+            child: HorizontalSlidableButton(
+              buttonWidth: 100.0,
+              height: 50,
+              color: const Color.fromRGBO(242, 242, 242, 1),
+              buttonColor: const Color.fromRGBO(93, 84, 217, 1),
+              dismissible: true,
+              label: const Center(child: Icon(LucideIcons.arrowRight, color: Colors.white)),
+              completeSlideAt: 0.8,
+              onChanged: (position) async {
+                if (position == SlidableButtonPosition.end) {
                   await _showRedeemConfirmation(context);
-                },
-                disabled:
-                    !ticketModel.data!.every((item) => item.qty! > item.used!),
+                }
+              },
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Center(
+                  child: Text(
+                    'Swipe Redeem Ticket', 
+                    style: GoogleFonts.poppins(
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
               ),
             ),
+          ),
     );
   }
 
@@ -82,34 +99,18 @@ class RedeemTicketScreen extends StatelessWidget {
               height: 200,
             ),
           ),
-          const Text("Data not found",
-              style:
-                  TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
+          Text("Data not found", style: GoogleFonts.poppins(fontWeight: FontWeight.bold, fontSize: 20)),
         ],
       ),
     );
   }
 
   Future<void> _showRedeemConfirmation(BuildContext context) async {
-    QuickAlert.show(
-      context: context,
-      type: QuickAlertType.warning,
-      barrierColor: const Color.fromRGBO(130, 102, 224, 0.2),
-      title: "Ready to REDEEM?",
-      showCancelBtn: true,
-      confirmBtnText: "Yes",
-      confirmBtnColor: const Color.fromRGBO(130, 102, 224, 1),
-      cancelBtnText: "No",
-      onConfirmBtnTap: () async {
-        Navigator.pop(context);
-
-        if (ticketUcImpl.jsonDataRedeem == "") {
-          _prepareAndRedeem();
-        } else {
-          await ticketUcImpl.redeemTicket(ticketUcImpl.jsonDataRedeem);
-        }
-      },
-    );
+    if (ticketUcImpl.jsonDataRedeem == "") {
+      _prepareAndRedeem();
+    } else {
+      await ticketUcImpl.redeemTicket(ticketUcImpl.jsonDataRedeem);
+    }
   }
 
   void _prepareAndRedeem() async {
@@ -148,9 +149,7 @@ class RedeemTicketScreen extends StatelessWidget {
               height: 200,
             ),
           ),
-          const Text("Ticket Redeemed",
-              style:
-                  TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
+          Text("Ticket Already Used", style: GoogleFonts.poppins(fontWeight: FontWeight.bold, fontSize: 20)),
         ],
       ),
     );
@@ -180,17 +179,16 @@ class RedeemTicketScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     ...[
-                      const Text("Run With Sai",
-                          style: TextStyle(fontWeight: FontWeight.bold)),
+                      Text(ticketModel.data![index].variant!, style: GoogleFonts.poppins(fontWeight: FontWeight.bold, fontSize: 18)),
                       const SizedBox(
                         height: 5,
                       ),
                       Text(
                         "Total: ${data.qty}/Redeemed: ${data.used}",
-                        style: const TextStyle(
-                            fontSize: 14,
-                            color: Color.fromRGBO(130, 102, 224, 1),
-                            fontWeight: FontWeight.w600),
+                        style: GoogleFonts.poppins(
+                            fontSize: 15,
+                            color: const Color.fromRGBO(130, 102, 224, 1),
+                            fontWeight: FontWeight.bold),
                       ),
                     ],
                     SizedBox(
@@ -242,21 +240,21 @@ class RedeemTicketScreen extends StatelessWidget {
       },
       decoration: const QtyDecorationProps(
         isBordered: true,
-        btnColor: Color.fromRGBO(130, 102, 224, 1),
-        iconColor: Color.fromRGBO(130, 102, 224, 1),
+        btnColor: Color.fromRGBO(93, 84, 217, 1),
+        iconColor: Color.fromRGBO(93, 84, 217, 1),
         plusButtonConstrains: BoxConstraints(minWidth: 55),
         minusButtonConstrains: BoxConstraints(minWidth: 55),
         contentPadding: EdgeInsets.all(15),
         border: OutlineInputBorder(
             borderRadius: BorderRadius.all(Radius.circular(50))),
         minusBtn: Icon(
-          LucideIcons.minusCircle,
-          color: Colors.purple,
+          Icons.remove_circle_rounded,
+          color: Color.fromRGBO(0, 0, 0, 1),
           size: 35,
         ),
         plusBtn: Icon(
-          LucideIcons.plusCircle,
-          color: Colors.indigo,
+          Icons.add_circle_sharp,
+          color: Color.fromRGBO(93, 84, 217, 1),
           size: 35,
         ),
       ),

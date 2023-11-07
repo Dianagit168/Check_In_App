@@ -1,4 +1,3 @@
-import 'dart:ui';
 import 'package:check_in_app/index.dart';
 
 class ModernDialog {
@@ -27,7 +26,7 @@ class ModernDialog {
                 onPressed: () {
                   Navigator.pop(context);
                 },
-                child: const Text('Close', style: TextStyle(fontWeight: FontWeight.bold)),
+                child: Text('Close', style: GoogleFonts.poppins(fontWeight: FontWeight.bold)),
               ),
             action2 ?? Container(),
           ],
@@ -36,50 +35,92 @@ class ModernDialog {
     );
   }
 
-  Future<void> dialogLoading(
-      BuildContext context, {
-        bool isTicket = false,
-        String? content,
-        bool barrierDismissible = false,
-      }) async {
-    await showDialog(
-      barrierDismissible: barrierDismissible,
-      context: context,
-      builder: (context) {
-        return BackdropFilter(
-          filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
-          child: _progress(isTicket: isTicket, content: content),
-        );
-      },
-    );
-  }
+  // Future<void> dialogLoading(
+  //     BuildContext context, {
+  //       bool isTicket = false,
+  //       String? content,
+  //       bool barrierDismissible = false,
+  //     }) async {
+  //   await showDialog(
+  //     barrierDismissible: barrierDismissible,
+  //     context: context,
+  //     builder: (context) {
+  //       return BackdropFilter(
+  //         filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
+  //         child: _progress(isTicket: isTicket, content: content),
+  //       );
+  //     },
+  //   );
+  // }
 
-  Widget _progress({bool isTicket = false, String? content}) {
-    return Material(
-      color: Colors.transparent,
-      child: Stack(
-        alignment: Alignment.center,
-        children: <Widget>[
-          Column(
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              const CircularProgressIndicator(
-                backgroundColor: Colors.transparent,
-                valueColor: AlwaysStoppedAnimation(
-                  Color.fromRGBO(130, 102, 224, 1),
-                ),
-              ),
-              if (content != null)
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 10.0, top: 16.0),
-                  child: Text(content, textAlign: TextAlign.center),
-                ),
-            ],
-          )
-        ],
-      ),
-    );
-  }
+  // Widget _progress({bool isTicket = false, String? content}) {
+  //   return Material(
+  //     color: Colors.transparent,
+  //     child: Stack(
+  //       alignment: Alignment.center,
+  //       children: <Widget>[
+  //         Column(
+  //           mainAxisSize: MainAxisSize.min,
+  //           children: <Widget>[
+  //             const CircularProgressIndicator(
+  //               backgroundColor: Colors.transparent,
+  //               valueColor: AlwaysStoppedAnimation(
+  //                 Color.fromRGBO(130, 102, 224, 1),
+  //               ),
+  //             ),
+  //             if (content != null)
+  //               Padding(
+  //                 padding: const EdgeInsets.only(bottom: 10.0, top: 16.0),
+  //                 child: Text(content, textAlign: TextAlign.center),
+  //               ),
+  //           ],
+  //         )
+  //       ],
+  //     ),
+  //   );
+  // }
+
+  // Future<void> showTextFieldDialog(
+  //   BuildContext context, 
+  //   {
+  //     required TextEditingController controller, 
+  //     required Function submit
+  //   }) async {
+  //   return showDialog(
+  //     context: context,
+  //     builder: (BuildContext context) {
+  //       return AlertDialog(
+  //         title: const Text('Modern Text Field Dialog'),
+  //         content: TextField(
+  //           controller: controller,
+  //           decoration: const InputDecoration(
+  //             hintText: 'Enter text...',
+  //             hintStyle: TextStyle(color: Colors.grey),
+  //             border: OutlineInputBorder(
+  //               borderSide: BorderSide(
+  //                 color: Colors.grey,
+  //               ),
+  //             ),
+  //           ),
+  //         ),
+  //         actions: <Widget>[
+  //           TextButton(
+  //             onPressed: () {
+  //               Navigator.of(context).pop(); // Close the dialog
+  //             },
+  //             child: const Text('Cancel'),
+  //           ),
+  //           ElevatedButton(
+  //             onPressed: () {
+  //               submit();
+  //             },
+  //             child: const Text('Submit'),
+  //           ),
+  //         ],
+  //       );
+  //     },
+  //   );
+  // }
 
   Future<void> successMsg(
       BuildContext context, String msg, {
@@ -91,17 +132,20 @@ class ModernDialog {
       context,
       title: Lottie.asset(
         animation ?? "assets/animations/successful.json",
-        repeat: true,
-        reverse: true,
-        height: 80,
+        repeat: false,
+        reverse: false,
+        height: 125,
       ),
-      content: Text(
-        msg,
-        style: const TextStyle(
-          fontSize: 15,
-          fontWeight: FontWeight.w500,
+      content: Padding(
+        padding: const EdgeInsets.only(bottom: 20, right: 20, left: 20),
+        child: Text(
+          msg,
+          style: GoogleFonts.poppins(
+            fontSize: 18,
+            fontWeight: FontWeight.w500,
+          ),
+          textAlign: TextAlign.center,
         ),
-        textAlign: TextAlign.center,
       ),
       action2: action2,
       removeFirstBtn: true,
@@ -119,17 +163,20 @@ class ModernDialog {
       context,
       title: Lottie.asset(
         animation ?? "assets/animations/failed.json",
-        repeat: true,
-        reverse: true,
-        height: 80,
+        repeat: false,
+        reverse: false,
+        height: 125,
       ),
-      content: Text(
-        error,
-        style: const TextStyle(
-          fontSize: 15,
-          fontWeight: FontWeight.w500,
+      content: Padding(
+        padding: const EdgeInsets.only(bottom: 20),
+        child: Text(
+          error,
+          style: GoogleFonts.poppins(
+            fontSize: 18,
+            fontWeight: FontWeight.w500,
+          ),
+          textAlign: TextAlign.center,
         ),
-        textAlign: TextAlign.center,
       ),
       action2: action2,
       removeFirstBtn: true,

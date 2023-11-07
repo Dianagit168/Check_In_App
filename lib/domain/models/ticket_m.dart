@@ -26,6 +26,7 @@ class TicketModel {
 
 class GetTicketData {
     final String? id;
+    final String? variant;
     final String? orderId;
     final String? lineItem;
     final int? qty;
@@ -38,6 +39,7 @@ class GetTicketData {
 
     GetTicketData({
         this.id,
+        this.variant,
         this.orderId,
         this.lineItem,
         this.qty,
@@ -55,6 +57,7 @@ class GetTicketData {
 
     factory GetTicketData.fromJson(Map<String, dynamic> json) => GetTicketData(
         id: json["_id"],
+        variant: json["variant"],
         orderId: json["order_id"],
         lineItem: json["line_item"],
         qty: json["qty"],
@@ -68,6 +71,7 @@ class GetTicketData {
 
     Map<String, dynamic> toJson() => {
         "_id": id,
+        "variant": variant,
         "order_id": orderId,
         "line_item": lineItem,
         "qty": qty,
