@@ -15,7 +15,7 @@ class TicketUcImpl {
 
   final TextEditingController ticketController = TextEditingController();
 
-  late QRViewController qrViewController;
+  QRViewController? qrViewController;
 
   bool isScanning = true;
 
@@ -129,7 +129,7 @@ class TicketUcImpl {
   void _invalidError() {
     Navigator.pop(_context);
     ModernDialog().errorMsg(_context, "Failed Invalid QR Code").then((value) {
-      qrViewController.resumeCamera().then((value) {
+      qrViewController!.resumeCamera().then((value) {
         isScanning = true;
       });
     });

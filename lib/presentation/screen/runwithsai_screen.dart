@@ -84,12 +84,12 @@ class RunWithSaiScreen extends StatelessWidget {
       valueListenable: ticketUcImpl.ticketCountModel,
       builder: (context, countTicketVal, wg) {
         return Column(
+          crossAxisAlignment: CrossAxisAlignment.end,
           children: [
 
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 5.0),
               child: Row(
-                crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   Text(
                     "Total Ticket: ", 
@@ -111,7 +111,6 @@ class RunWithSaiScreen extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 5.0),
               child: Row(
-                crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   Text(
                     "Used Ticket: ", 

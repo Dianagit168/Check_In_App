@@ -35,7 +35,7 @@ class GetTicketData {
     final DateTime? createdAt;
     final DateTime? updatedAt;
     final int? v;
-    final String? title;
+    final RedeemedBy? redeemedBy;
 
     GetTicketData({
         this.id,
@@ -48,7 +48,7 @@ class GetTicketData {
         this.createdAt,
         this.updatedAt,
         this.v,
-        this.title,
+        this.redeemedBy
     });
 
     factory GetTicketData.fromRawJson(String str) => GetTicketData.fromJson(json.decode(str));
@@ -66,7 +66,7 @@ class GetTicketData {
         createdAt: json["createdAt"] == null ? null : DateTime.parse(json["createdAt"]),
         updatedAt: json["updatedAt"] == null ? null : DateTime.parse(json["updatedAt"]),
         v: json["__v"],
-        title: json["title"],
+        redeemedBy: json["redeemed_by"] == null ? null : RedeemedBy.fromJson(json["redeemed_by"]),
     );
 
     Map<String, dynamic> toJson() => {
@@ -80,6 +80,50 @@ class GetTicketData {
         "createdAt": createdAt?.toIso8601String(),
         "updatedAt": updatedAt?.toIso8601String(),
         "__v": v,
-        "title": title
+        "redeemed_by": redeemedBy?.toJson(),
+    };
+}
+
+class RedeemedBy {
+    final String? id;
+    final String? name;
+    final String? email;
+    final String? role;
+    final DateTime? createdAt;
+    final DateTime? updatedAt;
+    final int? v;
+
+    RedeemedBy({
+        this.id,
+        this.name,
+        this.email,
+        this.role,
+        this.createdAt,
+        this.updatedAt,
+        this.v,
+    });
+
+    factory RedeemedBy.fromRawJson(String str) => RedeemedBy.fromJson(json.decode(str));
+
+    String toRawJson() => json.encode(toJson());
+
+    factory RedeemedBy.fromJson(Map<String, dynamic> json) => RedeemedBy(
+        id: json["_id"],
+        name: json["name"],
+        email: json["email"],
+        role: json["role"],
+        createdAt: json["createdAt"] == null ? null : DateTime.parse(json["createdAt"]),
+        updatedAt: json["updatedAt"] == null ? null : DateTime.parse(json["updatedAt"]),
+        v: json["__v"],
+    );
+
+    Map<String, dynamic> toJson() => {
+        "_id": id,
+        "name": name,
+        "email": email,
+        "role": role,
+        "createdAt": createdAt?.toIso8601String(),
+        "updatedAt": updatedAt?.toIso8601String(),
+        "__v": v,
     };
 }

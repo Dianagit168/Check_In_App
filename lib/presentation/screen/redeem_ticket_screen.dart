@@ -1,4 +1,5 @@
 import 'package:check_in_app/index.dart';
+import 'package:check_in_app/utils.dart';
 
 class RedeemTicketScreen extends StatelessWidget {
   final String id;
@@ -16,17 +17,7 @@ class RedeemTicketScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     ticketUcImpl.setBuildContext = context;
 
-    ticketUcImpl.redeemItems = ticketModel.data!.map((itemData) {
-      return RedeemItemModel(
-        orderId: itemData.orderId!,
-        lineItem: itemData.lineItem!,
-        qty: itemData.qty!,
-      );
-    }).toList();
-
-    print("variant ${ticketModel.data![0].id}");
-
-    print(dotenv.env["API_URL"]);
+    // print("ticketUcImpl.jsonDataRedeem build ${ticketUcImpl.jsonDataRedeem}");
 
     return Scaffold(
       appBar: normalAppBar(context, titleAppbar: "Redeem Ticket"),
@@ -47,7 +38,7 @@ class RedeemTicketScreen extends StatelessWidget {
             ),
             ticketModel.data!.isEmpty
                 ? _noDataFound()
-                : _cardTypeTicket(context),
+                : _ticketCard(context)
           ],
         ),
       ),
@@ -55,28 +46,31 @@ class RedeemTicketScreen extends StatelessWidget {
           ? const SizedBox()
           : Container(
             color: Colors.white,
-            padding: const EdgeInsets.only(left: 10, right: 10, bottom: 50, top: 0),
-            child: HorizontalSlidableButton(
-              buttonWidth: 100.0,
-              height: 50,
-              color: const Color.fromRGBO(242, 242, 242, 1),
-              buttonColor: const Color.fromRGBO(93, 84, 217, 1),
-              dismissible: true,
-              label: const Center(child: Icon(LucideIcons.arrowRight, color: Colors.white)),
-              completeSlideAt: 0.8,
-              onChanged: (position) async {
-                if (position == SlidableButtonPosition.end) {
-                  await _showRedeemConfirmation(context);
-                }
-              },
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Center(
-                  child: Text(
-                    'Swipe Redeem Ticket', 
-                    style: GoogleFonts.poppins(
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
+            padding: const EdgeInsets.all(10),
+            child: Padding(
+              padding: EdgeInsets.only(bottom: MediaQuery.of(context).padding.bottom),
+              child: HorizontalSlidableButton(
+                buttonWidth: 100.0,
+                height: 50,
+                color: const Color.fromRGBO(93, 84, 217, 0.2),
+                buttonColor: const Color.fromRGBO(93, 84, 217, 1),
+                dismissible: true,
+                label: const Center(child: Icon(LucideIcons.arrowRight, color: Colors.white)),
+                completeSlideAt: 0.8,
+                onChanged: (position) async {
+                  if (position == SlidableButtonPosition.end) {
+                    await _showRedeemConfirmation(context);
+                  }
+                },
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Center(
+                    child: Text(
+                      'Swipe Redeem Ticket', 
+                      style: GoogleFonts.poppins(
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                 ),
@@ -109,6 +103,7 @@ class RedeemTicketScreen extends StatelessWidget {
     if (ticketUcImpl.jsonDataRedeem == "") {
       _prepareAndRedeem();
     } else {
+      // print("ticketUcImpl.jsonDataRedeem != null ${ticketUcImpl.jsonDataRedeem}");
       await ticketUcImpl.redeemTicket(ticketUcImpl.jsonDataRedeem);
     }
   }
@@ -127,32 +122,10 @@ class RedeemTicketScreen extends StatelessWidget {
 
     ticketUcImpl.jsonDataRedeem = jsonEncode(newData);
 
+    // print("ticketUcImpl.jsonDataRedeem == null ${ticketUcImpl.jsonDataRedeem}");
+
     await ticketUcImpl.redeemTicket(ticketUcImpl.jsonDataRedeem);
-  }
 
-  Widget _cardTypeTicket(BuildContext context) {
-    return ticketModel.data!.every((item) => item.qty! == item.used!)
-        ? _ticketRedeemed()
-        : _ticketCard(context);
-  }
-
-  Widget _ticketRedeemed() {
-    return Padding(
-      padding: const EdgeInsets.all(12.0),
-      child: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: SvgPicture.asset(
-              "assets/images/empty.svg",
-              width: 200,
-              height: 200,
-            ),
-          ),
-          Text("Ticket Already Used", style: GoogleFonts.poppins(fontWeight: FontWeight.bold, fontSize: 20)),
-        ],
-      ),
-    );
   }
 
   Widget _ticketCard(BuildContext context) {
@@ -191,6 +164,56 @@ class RedeemTicketScreen extends StatelessWidget {
                             fontWeight: FontWeight.bold),
                       ),
                     ],
+
+                    const SizedBox(height: 10),
+
+                    ...[
+                      ticketModel.data![index].redeemedBy != null ?   
+                      Text.rich(
+                        TextSpan(
+                          children: [
+                            const TextSpan(text: 'Redeemed By: ', style: TextStyle(fontSize: 13)),
+                            TextSpan(
+                              text: ticketModel.data![index].redeemedBy!.name!,
+                              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
+                            ),
+                          ],
+                        ),
+                      ) : const SizedBox(),
+                    
+                      ticketModel.data![index].redeemedBy != null ? const SizedBox(height: 5) : const SizedBox(),
+
+                      ticketModel.data![index].redeemedBy != null ?   
+                      Text.rich(
+                        TextSpan(
+                          children: [
+                            const TextSpan(text: 'Used At: ', style: TextStyle(fontSize: 13)),
+                            TextSpan(
+                              text: AppUtils.formatDateTimeStringToLocal(ticketModel.data![index].redeemedBy!.createdAt!),
+                              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
+                            ),
+                          ],
+                        ),
+                      ) : const SizedBox(),
+
+                      ticketModel.data![index].redeemedBy != null ? const SizedBox(height: 5) : const SizedBox(),
+
+                      ticketModel.data![index].redeemedBy != null ?   
+                      Text.rich(
+                        TextSpan(
+                          children: [
+                            const TextSpan(text: 'Updated At: ', style: TextStyle(fontSize: 13)),
+                            TextSpan(
+                              text: AppUtils.formatDateTimeStringToLocal(ticketModel.data![index].redeemedBy!.updatedAt!),
+                              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
+                            ),
+                          ],
+                        ),
+                      ) : const SizedBox(),
+
+                      ticketModel.data![index].redeemedBy != null ? const SizedBox(height: 5) : const SizedBox(),
+                    ],
+
                     SizedBox(
                       width: MediaQuery.of(context).size.width,
                       child: Padding(
@@ -198,6 +221,8 @@ class RedeemTicketScreen extends StatelessWidget {
                         child: _amountBtn(ticketUcImpl.redeemItems, index),
                       ),
                     ),
+
+                    
                   ],
                 ),
               );
@@ -213,7 +238,7 @@ class RedeemTicketScreen extends StatelessWidget {
       maxVal: ticketModel.data![index].qty! - ticketModel.data![index].used!,
       initVal: ticketModel.data![index].qty! - ticketModel.data![index].used!,
       steps: 1,
-      minVal: 1,
+      minVal: 0,
       qtyFormProps: QtyFormProps(
         enableTyping: true,
         enabled: ticketModel.data![index].qty! ==
@@ -237,6 +262,7 @@ class RedeemTicketScreen extends StatelessWidget {
         ticketUcImpl.jsonDataRedeem = jsonEncode(newData);
 
         print(ticketUcImpl.jsonDataRedeem);
+        
       },
       decoration: const QtyDecorationProps(
         isBordered: true,
