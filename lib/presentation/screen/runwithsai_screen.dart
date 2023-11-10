@@ -99,8 +99,9 @@ class RunWithSaiScreen extends StatelessWidget {
                     ),
                   ),
                   
+                  countTicketVal.total == null ? const SizedBox(height: 20, width: 20, child: CircularProgressIndicator()) :
                   AnimatedFlipCounter(
-                    value: countTicketVal.total == null ? 0 : countTicketVal.total![0].total!,
+                    value: countTicketVal.total![0].total!,
                     duration: const Duration(seconds: 1),
                     textStyle: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: Colors.white),
                   ),
@@ -120,8 +121,9 @@ class RunWithSaiScreen extends StatelessWidget {
                     ),
                   ),
                   
+                  countTicketVal.total == null ? const SizedBox(height: 20, width: 20, child: CircularProgressIndicator()) :
                   AnimatedFlipCounter(
-                    value: countTicketVal.used == null ? 0 : countTicketVal.used![0].used!,
+                    value: countTicketVal.used![0].used!,
                     duration: const Duration(seconds: 1),
                     textStyle: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: Colors.white),
                   ),

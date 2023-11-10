@@ -7,7 +7,7 @@ class AppUtils {
     DateTime localDateTime = dateTime.toLocal();
 
     // Format the local DateTime object
-    String formattedDateTime = DateFormat('dd-MMM-yyyy HH:mm:ss').format(localDateTime);
+    String formattedDateTime = DateFormat('MM/dd/yyyy, HH:mm:ss a').format(localDateTime);
 
     return formattedDateTime;
   }

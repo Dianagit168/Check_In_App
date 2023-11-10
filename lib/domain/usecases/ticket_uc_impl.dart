@@ -55,7 +55,7 @@ class TicketUcImpl {
 
   Future<CountTicketModel> countTicketData() async {
 
-    try {
+    // try {
       final data = await _getRestApi.getTicketCount();
 
       decode = json.decode(data.body);
@@ -66,10 +66,9 @@ class TicketUcImpl {
         _handleError('Failed to load queryTicketData');
         throw Exception('Failed to load queryTicketData');
       }
-    } catch (e) {
-      _invalidError();
-      throw Exception('Failed Invalid QR Code');
-    }
+    // } catch (e) {
+    //   throw Exception('Failed Request countTicketData');
+    // }
     
   }
 

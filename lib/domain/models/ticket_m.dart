@@ -36,6 +36,7 @@ class GetTicketData {
     final DateTime? updatedAt;
     final int? v;
     final RedeemedBy? redeemedBy;
+    final String? redeemedAt;
 
     GetTicketData({
         this.id,
@@ -48,7 +49,8 @@ class GetTicketData {
         this.createdAt,
         this.updatedAt,
         this.v,
-        this.redeemedBy
+        this.redeemedBy,
+        this.redeemedAt
     });
 
     factory GetTicketData.fromRawJson(String str) => GetTicketData.fromJson(json.decode(str));
@@ -67,6 +69,7 @@ class GetTicketData {
         updatedAt: json["updatedAt"] == null ? null : DateTime.parse(json["updatedAt"]),
         v: json["__v"],
         redeemedBy: json["redeemed_by"] == null ? null : RedeemedBy.fromJson(json["redeemed_by"]),
+        redeemedAt: json["redeemed_at"],
     );
 
     Map<String, dynamic> toJson() => {
@@ -81,6 +84,7 @@ class GetTicketData {
         "updatedAt": updatedAt?.toIso8601String(),
         "__v": v,
         "redeemed_by": redeemedBy?.toJson(),
+        "redeemed_at": redeemedAt,
     };
 }
 

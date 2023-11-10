@@ -187,9 +187,9 @@ class RedeemTicketScreen extends StatelessWidget {
                       Text.rich(
                         TextSpan(
                           children: [
-                            const TextSpan(text: 'Used At: ', style: TextStyle(fontSize: 13)),
+                            const TextSpan(text: 'Redeemed At: ', style: TextStyle(fontSize: 13)),
                             TextSpan(
-                              text: AppUtils.formatDateTimeStringToLocal(ticketModel.data![index].redeemedBy!.createdAt!),
+                              text: ticketModel.data![index].redeemedAt!,
                               style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
                             ),
                           ],
@@ -204,7 +204,7 @@ class RedeemTicketScreen extends StatelessWidget {
                           children: [
                             const TextSpan(text: 'Updated At: ', style: TextStyle(fontSize: 13)),
                             TextSpan(
-                              text: AppUtils.formatDateTimeStringToLocal(ticketModel.data![index].redeemedBy!.updatedAt!),
+                              text: AppUtils.formatDateTimeStringToLocal(ticketModel.data![index].updatedAt!),
                               style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
                             ),
                           ],

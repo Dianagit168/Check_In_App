@@ -33,6 +33,10 @@ class ScanQrScreenState extends State<ScanQrScreen> {
       List<String> parts = scannedCode.split('/');
       String id = parts.last;
 
+      // print(scannedCode);
+
+      // print(id);
+
       QuickAlert.show(
         context: context,
         type: QuickAlertType.loading,
