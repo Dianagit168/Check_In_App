@@ -24,7 +24,7 @@ class Glassmorphism extends StatelessWidget {
         filter: ImageFilter.blur(sigmaX: blur, sigmaY: blur),
         child: Container(
           decoration: BoxDecoration(
-            color: Colors.black.withOpacity(opacity),
+            color: Colors.white.withOpacity(opacity),
             borderRadius: borderRadius,
           ),
           child: child,

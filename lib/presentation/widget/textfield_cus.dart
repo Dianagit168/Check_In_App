@@ -5,7 +5,11 @@ Widget textfieldWidget(
     final Icon? icon,
     final String title,
     final TextEditingController? controller,
-    {final bool isSecure = false}
+    
+    {
+      final bool? isSecure,
+      final Function? toggleObscured,
+    }
   ) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -34,6 +38,18 @@ Widget textfieldWidget(
             decoration: InputDecoration(
               border: InputBorder.none,
               prefixIcon: icon!,
+              suffixIcon:  Padding(
+                padding: const EdgeInsets.fromLTRB(0, 0, 4, 0),
+                child: GestureDetector(
+                  onTap: toggleObscured!(),
+                  child: Icon(
+                    isSecure!
+                      ? Icons.visibility_rounded
+                      : Icons.visibility_off_rounded,
+                    size: 24,
+                  ),
+                ),
+              ),
             ),
             controller: controller,
             obscureText: isSecure,

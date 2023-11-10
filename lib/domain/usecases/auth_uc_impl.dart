@@ -37,22 +37,37 @@ class AuthUcImpl {
     );
 
     try {
-      if (email.isNotEmpty && password.isNotEmpty) {
-        var response = await _postApi.loginApi(email: email, password: password);
-        
-        authModel.decode = json.decode(response.body);
 
-        if (response.statusCode == 200) {
-          await SecureStorage.writeSecure(DbKey.bearerToken, authModel.decode!['token']).then((value) {
-            _context!.goNamed(RouterName.mainScreen);
-          });
-          
-        } else {
-          showErrorDialog("Something went wrong. Please try again!");
-        }
-      } else {
-        showErrorDialog("Please input Email and Password");
+      final response = await _postApi.loginApi(email: email, password: password);
+        
+      authModel.decode = json.decode(response.body);
+
+      if (response.statusCode == 200) {
+        await SecureStorage.writeSecure(DbKey.bearerToken, authModel.decode!['token']).then((value) {
+          _context!.goNamed(RouterName.mainScreen);
+        });
+        
+      } 
+      else {
+        showErrorDialog("${authModel.decode!["message"]}");
       }
+      
+      // if (email.isNotEmpty && password.isNotEmpty) {
+      //   final response = await _postApi.loginApi(email: email, password: password);
+        
+      //   authModel.decode = json.decode(response.body);
+
+      //   if (response.statusCode == 200) {
+      //     await SecureStorage.writeSecure(DbKey.bearerToken, authModel.decode!['token']).then((value) {
+      //       _context!.goNamed(RouterName.mainScreen);
+      //     });
+          
+      //   } else {
+      //     showErrorDialog("${authModel.decode!["message"]}");
+      //   }
+      // } else {
+      //   showErrorDialog("Please input Email and Password");
+      // }
     } catch (e) {
       showErrorDialog("Something went wrong. Please try again!");
     }
