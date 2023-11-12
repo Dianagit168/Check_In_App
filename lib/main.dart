@@ -1,23 +1,91 @@
-import 'package:check_in_app/presentation/screen/login_screen.dart';
-import 'package:flutter/material.dart';
+import 'package:check_in_app/index.dart';
 
-void main() {
-  runApp(const MyApp());
+Future main() async {
+  await dotenv.load(fileName: ".env");
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+  ]).then((value) {
+    runApp(const MyApp());
+  });
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
+    return MaterialApp.router(
+      title: 'AnyTicket',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
+        visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: LoginScreen(),
+      routerConfig: router,
     );
   }
+
+  void hideKeyboard(BuildContext context) {
+    FocusScopeNode currentFocus = FocusScope.of(context);
+    if (!currentFocus.hasPrimaryFocus && currentFocus.focusedChild != null) {
+      FocusManager.instance.primaryFocus!.unfocus();
+    }
+  }
+}
+
+
+class SplashScreen extends StatelessWidget {
+
+  final AuthUcImpl _authUcImpl = AuthUcImpl();
+
+  SplashScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+
+    _authUcImpl.setBuildContext = context;
+
+    _authUcImpl.checkExistAcc();
+
+    return Scaffold(
+      body: SizedBox(
+        child: Center(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+
+              const Spacer(),
+
+              ...[
+                Lottie.asset(
+                  "assets/animations/splash_screen.json",
+                  repeat: true,
+                  reverse: true,
+                  height: 250,
+                  width: 250
+                ),
+          
+                const Padding(
+                  padding: EdgeInsets.all(25.0),
+                  child: LinearProgressIndicator(
+                    borderRadius: BorderRadius.all(Radius.circular(10)),
+                  ),
+                ),
+              ],
+
+              const Spacer(),
+
+              poweredByKoompiLogoBlack(),
+        
+            ],
+          ),
+        )
+      )
+    );
+  }
+
 }

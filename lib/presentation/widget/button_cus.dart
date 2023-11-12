@@ -1,5 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:lucide_icons/lucide_icons.dart';
+import 'package:check_in_app/index.dart';
 
 class ElevatedButtonCust extends StatelessWidget {
   const ElevatedButtonCust({
@@ -7,9 +6,19 @@ class ElevatedButtonCust extends StatelessWidget {
     this.tit,
     this.onNavigator,
     this.btnHigh,
+    this.borderColor = Colors.white,
+    this.btnColor = Colors.white,
+    this.textColor = Colors.white,
+    this.iconColor = Colors.white, 
+    this.iconData,
   }) : super(key: key);
   final String? tit;
   final double? btnHigh;
+  final Color? borderColor;
+  final Color? btnColor;
+  final Color? textColor;
+  final Color? iconColor;
+  final IconData? iconData;
   final void Function()? onNavigator;
 
   @override
@@ -19,34 +28,34 @@ class ElevatedButtonCust extends StatelessWidget {
       decoration: BoxDecoration(
         border: Border.all(
           width: 2,
-          color: const Color.fromARGB(255, 37, 67, 148),
+          color: borderColor!,
         ),
-        borderRadius: const BorderRadius.all(Radius.circular(32)),
+        borderRadius: const BorderRadius.all(Radius.circular(50)),
       ),
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
+          backgroundColor: btnColor,
           minimumSize: Size(MediaQuery.of(context).size.width, btnHigh!),
           elevation: 0,
-          // shape: RoundedRectangleBorder(
-          //   borderRadius: BorderRadius.circular(16),
-          // ),
         ),
         onPressed: onNavigator,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Icon(
-              LucideIcons.logIn,
-              color: Color.fromARGB(255, 37, 67, 148),
-            ),
+            iconData != null ?Icon(
+              iconData,
+              color: iconColor!,
+            ) : const SizedBox(),
+            
             const SizedBox(
               width: 7,
             ),
             Text(
               tit!,
-              style: const TextStyle(
-                color: Color.fromARGB(255, 37, 67, 148),
-                fontSize:17
+              style: GoogleFonts.poppins(
+                color: textColor!,
+                fontSize: 15,
+                fontWeight: FontWeight.bold
               ),
             ),
           ],

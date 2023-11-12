@@ -1,70 +1,151 @@
-import 'dart:io';
+import 'package:check_in_app/index.dart';
 
-import 'package:flutter/material.dart';
-import 'package:qr_code_scanner/qr_code_scanner.dart';
-
-class ScanQr extends StatefulWidget {
-  const ScanQr({super.key});
+class ScanQrScreen extends StatefulWidget {
+  const ScanQrScreen({Key? key}) : super(key: key);
 
   @override
-  State<ScanQr> createState() => _ScanQrState();
+  ScanQrScreenState createState() => ScanQrScreenState();
 }
 
-class _ScanQrState extends State<ScanQr> {
-  final GlobalKey qrKey = GlobalKey();
-  Barcode? result;
-  QRViewController? controller;
+class ScanQrScreenState extends State<ScanQrScreen> {
+  final TicketUcImpl _ticketUcImpl = TicketUcImpl();
+  final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
+  bool _flashOn = false;
 
   @override
-  void reassemble() {
-    super.reassemble();
-    if (Platform.isAndroid) {
-      controller!.pauseCamera();
-    } else if (Platform.isIOS) {
-      controller!.resumeCamera();
-    }
-  }
-
-  void onQRViewCamera(QRViewController? controller) {
-    this.controller = controller;
-    controller!.scannedDataStream.listen((scanData) {
-      setState(() {
-        result = scanData;
-      });
-    });
+  void initState() {
+    super.initState();
   }
 
   @override
   void dispose() {
-    controller!.dispose();
+    _ticketUcImpl.qrViewController!.dispose();
     super.dispose();
+  }
+
+  void _handleScannedData(String scannedCode) async {
+    if (_ticketUcImpl.isScanning) {
+
+      setState(() {
+        _ticketUcImpl.isScanning = false;
+      });
+
+      List<String> parts = scannedCode.split('/');
+      String id = parts.last;
+
+      // print(scannedCode);
+
+      // print(id);
+
+      QuickAlert.show(
+        context: context,
+        type: QuickAlertType.loading,
+        barrierColor: const Color.fromRGBO(130, 102, 224, 0.2),
+        barrierDismissible: false,
+        disableBackBtn: true,
+      );
+
+      _ticketUcImpl.getTicketData(id).then((value) {
+        print("getTicketData");
+
+        Navigator.pop(context);
+
+        _ticketUcImpl.redeemItems = _ticketUcImpl.ticketModel.value.data!.map((itemData) {
+          return RedeemItemModel(
+            orderId: itemData.orderId!,
+            lineItem: itemData.lineItem!,
+            qty: itemData.qty!,
+          );
+        }).toList();
+
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => RedeemTicketScreen(
+              id: id,
+              ticketUcImpl: _ticketUcImpl,
+              ticketModel: _ticketUcImpl.ticketModel.value,
+            ),
+          ),
+        ).then((_) {
+          _ticketUcImpl.qrViewController!.resumeCamera().then((value) {
+            setState(() {
+              _ticketUcImpl.isScanning = true;
+              _ticketUcImpl.redeemItems = [];
+              _ticketUcImpl.jsonDataRedeem = "";
+            });
+          });
+        });
+      });
+
+      _ticketUcImpl.qrViewController!.pauseCamera();
+    }
+  }
+
+  void _onQrViewCreated(QRViewController controller) {
+    print("create qr view");
+    _ticketUcImpl.qrViewController = controller;
+
+    _ticketUcImpl.qrViewController!.scannedDataStream.listen((event) {
+      print("scannedDataStream");
+      _handleScannedData(event.code!);
+    });
+  }
+
+  Widget _buildQrScanner() {
+    return QRView(
+      cameraFacing: CameraFacing.back,
+      key: qrKey,
+      onQRViewCreated: _onQrViewCreated,
+      overlay: QrScannerOverlayShape(
+        borderColor: Theme.of(context).primaryColor,
+        borderRadius: 25,
+        borderLength: 50,
+        borderWidth: 10,
+        cutOutSize: MediaQuery.of(context).size.width / 1.25,
+        cutOutBottomOffset: MediaQuery.of(context).size.height / 20,
+      ),
+    );
+  }
+
+  Widget _buildFlashButton() {
+    return Positioned(
+      bottom: MediaQuery.of(context).size.height / 4.5,
+      left: MediaQuery.of(context).size.width / 2.25,
+      child: IconButton(
+        onPressed: () {
+          _ticketUcImpl.qrViewController!.toggleFlash();
+          setState(() {
+            _flashOn = !_flashOn;
+          });
+        },
+        color: Colors.white,
+        iconSize: 36,
+        icon: Icon(_flashOn ? Icons.flash_on : Icons.flash_off),
+        alignment: Alignment.center,
+      ),
+    );
+  }
+
+  Widget _buildPoweredByLogo() {
+    return Align(
+      alignment: Alignment.bottomCenter,
+      child: poweredByKoompiLogoWhite(),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
+    _ticketUcImpl.setBuildContext = context;
+
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Scan QR'),
-      ),
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.only(top: 30),
-          child: Column(
-            children: [
-              SizedBox(
-                height: 300,
-                width: 300,
-                child: QRView(key: qrKey, onQRViewCreated: onQRViewCamera),
-              ),
-              const SizedBox(
-                height: 30,
-              ),
-              (result != null)
-                  ? Text('Data is ${result!.code}')
-                  : const Text('Please scan QR code')
-            ],
-          ),
-        ),
+      appBar: normalAppBar(context, titleAppbar: "QR Scanner"),
+      body: Stack(
+        children: [
+          _buildQrScanner(),
+          _buildFlashButton(),
+          _buildPoweredByLogo(),
+        ],
       ),
     );
   }
