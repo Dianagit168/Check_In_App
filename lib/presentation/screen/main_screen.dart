@@ -22,6 +22,7 @@ class MainScreen extends StatelessWidget {
       body: LayoutBuilder(
         builder: ((_, constraints) {
           return RefreshIndicator(
+            color: const Color.fromRGBO(553, 161, 218, 1),
             onRefresh: () async {
               await Future.delayed(const Duration(seconds: 1));
               await ticketUcImpl.getCountTicketData();
@@ -57,18 +58,41 @@ class MainScreen extends StatelessWidget {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            const SizedBox(height: 75),
-                            // _buildHeaderText(),
+                            SafeArea(
+                              child: Align(
+                                alignment: Alignment.topRight,
+                                child: IconButton(
+                                  onPressed: () {
+                                    QuickAlert.show(
+                                      context: context, 
+                                      type: QuickAlertType.warning,
+                                      barrierColor: const Color.fromRGBO(553, 161, 218, 0.2),
+                                      title: "Warning",
+                                      text: "Are you sure want to log out?",
+                                      showCancelBtn: true,
+                                      confirmBtnText: "Yes",
+                                      cancelBtnText: "No",
+                                      onConfirmBtnTap: () {
+                                        SecureStorage.clearAllSecure().then((value) {
+                                          context.goNamed(RouterName.loginScreen);
+                                        });
+                                      }
+                                    );
+                                    
+                                  }, 
+                                  icon: const Icon(LucideIcons.logOut, color: Colors.red, size: 27,)
+                                ),
+                              ),
+                            ),
 
                             const Spacer(),
+
                             _buildEventCard(context),
                     
                             const Spacer(),
-                            _buildLogoutButton(context),
 
-                            const SizedBox(height: 15),
+                            const SizedBox(height: 125),
                             
-                            // poweredByKoompiLogoWhite(),
                           ],
                         ),
                       ),
@@ -80,7 +104,20 @@ class MainScreen extends StatelessWidget {
           );
         }
       ),
-    ));
+    ),
+    floatingActionButton: FloatingActionButton.large(
+      onPressed: () {
+        context.pushNamed(RouterName.scanCameraScreen);
+      },
+      backgroundColor: const Color.fromRGBO(553, 161, 218, 1),
+      tooltip: 'Scan QR',
+      elevation: 12,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
+      splashColor: Colors.grey,
+      child: const Icon(LucideIcons.camera, color: Colors.white, size: 50,),
+    ),
+    floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+    );
   }
 
   Widget _ticketCount() {
@@ -98,7 +135,7 @@ class MainScreen extends StatelessWidget {
                   Text(
                     "Total Ticket: ", 
                     style: GoogleFonts.poppins(
-                      fontSize: 15, 
+                      fontSize: 16, 
                       color: Colors.white,
                     ),
                   ),
@@ -107,7 +144,7 @@ class MainScreen extends StatelessWidget {
                   Text(
                     "0", 
                     style: GoogleFonts.poppins(
-                      fontSize: 15, 
+                      fontSize: 16, 
                       color: Colors.white,
                     ),
                   ) : 
@@ -128,7 +165,7 @@ class MainScreen extends StatelessWidget {
                   Text(
                     "Used Ticket: ", 
                     style: GoogleFonts.poppins(
-                      fontSize: 15, 
+                      fontSize: 16, 
                       color: Colors.white,
                     ),
                   ),
@@ -137,7 +174,7 @@ class MainScreen extends StatelessWidget {
                   Text(
                     "0", 
                     style: GoogleFonts.poppins(
-                      fontSize: 15, 
+                      fontSize: 16, 
                       color: Colors.white,
                     ),
                   ) : 
@@ -154,17 +191,6 @@ class MainScreen extends StatelessWidget {
           ],
         );
       }
-    );
-  }
-
-  Widget _buildHeaderText() {
-    return Text(
-      'AnyTicket crews check-in',
-      style: GoogleFonts.poppins(
-        fontSize: 23,
-        fontWeight: FontWeight.bold,
-        color: Colors.white,
-      ),
     );
   }
 
@@ -208,78 +234,20 @@ class MainScreen extends StatelessWidget {
     );
   }
 
-  // Widget _buildDateContainer(BuildContext context) {
-  //   return Container(
-  //     padding: const EdgeInsets.all(15),
-  //     margin: const EdgeInsets.all(10.0),
-  //     decoration: const BoxDecoration(
-  //       borderRadius: BorderRadius.all(Radius.circular(16)),
-  //       color: Color.fromRGBO(91, 81, 153, 1),
-  //     ),
-  //     child: Center(
-  //       child: Text(
-  //         '12 Nov\n2023',
-  //         style: GoogleFonts.poppins(
-  //           fontSize: 15,
-  //           fontWeight: FontWeight.bold,
-  //           color: Colors.white,
-  //         ),
-  //         textAlign: TextAlign.center,
-  //       ),
-  //     ),
-  //   );
-  // }
-
   Widget _buildEventInfo() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text(
-          'AnyTicket (Crew)',
+          'AnyTicket Crews',
           style: GoogleFonts.poppins(
             fontSize: 17,
             fontWeight: FontWeight.bold,
             color: Colors.white,
           ),
         ),
-        // const SizedBox(height: 5),
-        // Row(
-        //   children: [
-        //     const Icon(
-        //       LucideIcons.mapPin,
-        //       color: Colors.white,
-        //     ),
-        //     const SizedBox(width: 5),
-        //     Text(
-        //       'Kep City',
-        //       style: GoogleFonts.poppins(
-        //         fontSize: 15,
-        //         fontWeight: FontWeight.w500,
-        //         color: Colors.white,
-        //       ),
-        //     ),
-        //   ],
-        // ),
       ],
-    );
-  }
-
-  Widget _buildLogoutButton(BuildContext context) {
-    return SafeArea(
-      child: ElevatedButtonCust(
-        tit: 'Log Out',
-        btnColor: const Color.fromARGB(255, 255, 255, 255),
-        textColor: const Color.fromARGB(255, 235, 53, 53),
-        iconColor: const Color.fromARGB(255, 255, 255, 255),
-        borderColor: const Color.fromRGBO(553, 161, 218, 1),
-        btnHigh: 50,
-        onNavigator: () {
-          SecureStorage.clearAllSecure().then((value) {
-            context.goNamed(RouterName.loginScreen);
-          });
-        },
-      ),
     );
   }
 }
