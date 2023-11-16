@@ -65,7 +65,7 @@ class ModernDialog {
   //             const CircularProgressIndicator(
   //               backgroundColor: Colors.transparent,
   //               valueColor: AlwaysStoppedAnimation(
-  //                 Color.fromRGBO(130, 102, 224, 1),
+  //                 Color.fromRGBO(553, 161, 218, 1),
   //               ),
   //             ),
   //             if (content != null)

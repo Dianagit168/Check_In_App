@@ -17,8 +17,8 @@
 //           decoration: const BoxDecoration(
 //             image: DecorationImage(
 //               fit: BoxFit.cover,
-//               alignment: Alignment.centerRight,
-//               image: AssetImage('assets/images/runwithsai.png'),
+//               alignment: Alignment.center,
+//               image: AssetImage('assets/background.png'),
 //             ),
 //           ),
 //           child: _buildContent(context),
@@ -96,9 +96,9 @@
 //             ElevatedButtonCust(
 //               tit: 'Register',
 //               iconData: LucideIcons.logIn,
-//               textColor: const Color.fromRGBO(93, 84, 217, 1),
-//               iconColor: const Color.fromRGBO(93, 84, 217, 1),
-//               borderColor: const Color.fromRGBO(93, 84, 217, 1),
+//               textColor: const Color.fromRGBO(553, 161, 218, 1),
+//               iconColor: const Color.fromRGBO(553, 161, 218, 1),
+//               borderColor: const Color.fromRGBO(553, 161, 218, 1),
 //               btnHigh: 50,
 //               onNavigator: () async {
 //                 await authUcImpl.registerRequest(
@@ -128,9 +128,9 @@
 //   Widget _buildLoginButtonPage(BuildContext context) {
 //     return ElevatedButtonCust(
 //       tit: "Already have an account? CLICK HERE",
-//       textColor: const Color.fromRGBO(93, 84, 217, 1),
-//       iconColor: const Color.fromRGBO(93, 84, 217, 1),
-//       borderColor: const Color.fromRGBO(93, 84, 217, 1),
+//       textColor: const Color.fromRGBO(553, 161, 218, 1),
+//       iconColor: const Color.fromRGBO(553, 161, 218, 1),
+//       borderColor: const Color.fromRGBO(553, 161, 218, 1),
 //       btnHigh: 50,
 //       onNavigator: () {
 //         context.pop();

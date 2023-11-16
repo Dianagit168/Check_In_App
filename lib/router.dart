@@ -21,7 +21,7 @@ final router = GoRouter(
     GoRoute(
       name: RouterName.loginScreen,
       path: RouterName.loginScreen,
-      builder: (context, state) => LoginScreen(),
+      builder: (context, state) => const LoginScreen(),
     ),
     // GoRoute(
     //   name: RouterName.registerScreen,
@@ -31,7 +31,7 @@ final router = GoRouter(
     GoRoute(
       name: RouterName.mainScreen,
       path: RouterName.mainScreen,
-      builder: (context, state) => RunWithSaiScreen(),
+      builder: (context, state) => MainScreen(),
     ),
     GoRoute(
       name: RouterName.scanCameraScreen,

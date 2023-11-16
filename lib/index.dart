@@ -43,7 +43,7 @@ export 'package:check_in_app/domain/models/count_ticket_m.dart';
 export 'package:check_in_app/presentation/screen/register_screen.dart';
 export 'package:check_in_app/presentation/screen/login_screen.dart';
 export 'package:check_in_app/presentation/screen/qr_scanner.dart';
-export 'package:check_in_app/presentation/screen/runwithsai_screen.dart';
+export 'package:check_in_app/presentation/screen/main_screen.dart';
 export 'package:check_in_app/presentation/screen/redeem_ticket_screen.dart';
 
 // ====================> Presentation Widget <====================

@@ -37,8 +37,8 @@ class LoginScreenState extends State<LoginScreen> {
           decoration: const BoxDecoration(
             image: DecorationImage(
               fit: BoxFit.cover,
-              alignment: Alignment.centerRight,
-              image: AssetImage('assets/images/runwithsai.png'),
+              alignment: Alignment.center,
+              image: AssetImage('assets/images/background.png'),
             ),
           ),
           child: Glassmorphism(
@@ -60,7 +60,7 @@ class LoginScreenState extends State<LoginScreen> {
                     child: Column(
                       children: [
                         Text(
-                          'Welcome RUN WITH SAI',
+                          'Welcome AnyTicket',
                           style: GoogleFonts.poppins(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.white),
                         ),
                         const SizedBox(height: 10),
@@ -93,19 +93,30 @@ class LoginScreenState extends State<LoginScreen> {
                                 style: GoogleFonts.poppins(
                                   fontSize: 27,
                                   fontWeight: FontWeight.bold,
-                                  color: const Color.fromRGBO(82, 70, 255, 1)      
+                                  color: const Color.fromARGB(255, 255, 255, 255)      
                                 )
                               ),
                             ),
 
                             TextFormField(
-                              style: GoogleFonts.poppins(color: Colors.black),
+                              style: GoogleFonts.poppins(color: Colors.white),
                               decoration: InputDecoration(
                                 labelText: 'Email',
+                                hintStyle: const TextStyle(color: Colors.white),
+                                labelStyle: const TextStyle(color: Colors.white),
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(50.0),
+                                  borderSide:  const BorderSide(color: Colors.white),
                                 ),
-                                prefixIcon: const Icon(LucideIcons.user, color: Color.fromRGBO(93, 84, 217, 1),),
+                                enabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(50.0),
+                                  borderSide:  const BorderSide(color: Colors.white),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(50.0),
+                                  borderSide:  const BorderSide(color: Colors.white),
+                                ),
+                                prefixIcon: const Icon(LucideIcons.user, color: Color.fromARGB(255, 255, 255, 255))
                               ),
                               controller: authUcImpl.authModel.emailController,
                               validator: (value) {
@@ -117,15 +128,28 @@ class LoginScreenState extends State<LoginScreen> {
                                 return null;
                               },
                             ),
+                            
                             const SizedBox(height: 16),
+
                             TextFormField(
-                              style: GoogleFonts.poppins(color: Colors.black),
+                              style: GoogleFonts.poppins(color: Colors.white),
                               decoration: InputDecoration(
                                 labelText: 'Password',
+                                hintStyle: const TextStyle(color: Colors.white),
+                                labelStyle: const TextStyle(color: Colors.white),
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(50.0),
+                                  borderSide:  const BorderSide(color: Colors.white),
                                 ),
-                                prefixIcon: const Icon(LucideIcons.lock, color: Color.fromRGBO(93, 84, 217, 1),),
+                                enabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(50.0),
+                                  borderSide:  const BorderSide(color: Colors.white),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(50.0),
+                                  borderSide:  const BorderSide(color: Colors.white),
+                                ),
+                                prefixIcon: const Icon(LucideIcons.lock, color: Color.fromARGB(255, 255, 255, 255)),
                                 suffixIcon:  Padding(
                                   padding: const EdgeInsets.fromLTRB(0, 0, 4, 0),
                                   child: GestureDetector(
@@ -135,7 +159,7 @@ class LoginScreenState extends State<LoginScreen> {
                                         ? Icons.visibility_rounded
                                         : Icons.visibility_off_rounded,
                                       size: 24,
-                                      color: const Color.fromRGBO(93, 84, 217, 1),
+                                      color: const Color.fromARGB(255, 255, 255, 255),
                                     ),
                                   ),
                                 ),
@@ -157,9 +181,9 @@ class LoginScreenState extends State<LoginScreen> {
                               child: ElevatedButtonCust(
                                 tit: 'Login',
                                 iconData: LucideIcons.logIn,
-                                textColor: const Color.fromRGBO(93, 84, 217, 1),
-                                iconColor: const Color.fromRGBO(93, 84, 217, 1),
-                                borderColor: const Color.fromRGBO(93, 84, 217, 1),
+                                textColor: const Color.fromRGBO(553, 161, 218, 1),
+                                iconColor: const Color.fromRGBO(553, 161, 218, 1),
+                                borderColor: const Color.fromRGBO(553, 161, 218, 1),
                                 btnHigh: 50,
                                 onNavigator: () async {
                                   if (_formKey.currentState!.validate()) {

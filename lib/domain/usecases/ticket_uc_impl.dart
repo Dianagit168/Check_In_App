@@ -55,7 +55,7 @@ class TicketUcImpl {
 
   Future<CountTicketModel> countTicketData() async {
 
-    // try {
+    try {
       final data = await _getRestApi.getTicketCount();
 
       decode = json.decode(data.body);
@@ -66,9 +66,9 @@ class TicketUcImpl {
         _handleError('Failed to load queryTicketData');
         throw Exception('Failed to load queryTicketData');
       }
-    // } catch (e) {
-    //   throw Exception('Failed Request countTicketData');
-    // }
+    } catch (e) {
+      throw Exception('Failed Request countTicketData');
+    }
     
   }
 
@@ -94,7 +94,7 @@ class TicketUcImpl {
       barrierDismissible: false,
       action2: ElevatedButtonCust(
         tit: 'Close',
-        btnColor: const Color.fromRGBO(93, 84, 217, 1),
+        btnColor: const Color.fromRGBO(553, 161, 218, 1),
         textColor: const Color.fromARGB(255, 255, 255, 255),
         borderColor: const Color.fromRGBO(130, 102, 224, 0.5),
         btnHigh: 50,
@@ -113,7 +113,7 @@ class TicketUcImpl {
       barrierDismissible: false,
       action2: ElevatedButtonCust(
         tit: 'Close',
-        btnColor: const Color.fromRGBO(93, 84, 217, 1),
+        btnColor: const Color.fromRGBO(553, 161, 218, 1),
         textColor: const Color.fromARGB(255, 255, 255, 255),
         borderColor: const Color.fromRGBO(130, 102, 224, 0.5),
         btnHigh: 50,

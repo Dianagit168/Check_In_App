@@ -20,7 +20,6 @@ class MyApp extends StatelessWidget {
       title: 'AnyTicket',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
@@ -72,6 +71,7 @@ class SplashScreen extends StatelessWidget {
                 const Padding(
                   padding: EdgeInsets.all(25.0),
                   child: LinearProgressIndicator(
+                    color: Color.fromRGBO(553, 161, 218, 1),
                     borderRadius: BorderRadius.all(Radius.circular(10)),
                   ),
                 ),

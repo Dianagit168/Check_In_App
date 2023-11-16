@@ -7,11 +7,11 @@ class _ClampingScrollBehavior extends ScrollBehavior {
 }
 
 
-class RunWithSaiScreen extends StatelessWidget {
+class MainScreen extends StatelessWidget {
 
   final TicketUcImpl ticketUcImpl = TicketUcImpl();
 
-  RunWithSaiScreen({super.key});
+  MainScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -40,8 +40,9 @@ class RunWithSaiScreen extends StatelessWidget {
                     decoration: const BoxDecoration(
                       image: DecorationImage(
                         fit: BoxFit.cover,
-                        alignment: Alignment.centerRight,
-                        image: AssetImage('assets/images/runwithsai.png'),
+                        alignment: Alignment.center,
+                        filterQuality: FilterQuality.high,
+                        image: AssetImage('assets/images/background.png'),
                       ),
                     ),
                     child: Glassmorphism(
@@ -51,20 +52,23 @@ class RunWithSaiScreen extends StatelessWidget {
                       child: Container(
                         padding: const EdgeInsets.all(10.0),
                         decoration: BoxDecoration(
-                          color: Colors.black.withOpacity(0.2),
+                          color: Colors.black.withOpacity(0.5),
                         ),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             const SizedBox(height: 75),
-                            _buildHeaderText(),
+                            // _buildHeaderText(),
+
                             const Spacer(),
                             _buildEventCard(context),
                     
                             const Spacer(),
                             _buildLogoutButton(context),
+
+                            const SizedBox(height: 15),
                             
-                            poweredByKoompiLogoWhite(),
+                            // poweredByKoompiLogoWhite(),
                           ],
                         ),
                       ),
@@ -99,7 +103,15 @@ class RunWithSaiScreen extends StatelessWidget {
                     ),
                   ),
                   
-                  countTicketVal.total == null ? const SizedBox(height: 20, width: 20, child: CircularProgressIndicator()) :
+                  countTicketVal.total == null ? 
+                  Text(
+                    "0", 
+                    style: GoogleFonts.poppins(
+                      fontSize: 15, 
+                      color: Colors.white,
+                    ),
+                  ) : 
+                  //const SizedBox(height: 20, width: 20, child: CircularProgressIndicator()) :
                   AnimatedFlipCounter(
                     value: countTicketVal.total![0].total!,
                     duration: const Duration(seconds: 1),
@@ -121,7 +133,15 @@ class RunWithSaiScreen extends StatelessWidget {
                     ),
                   ),
                   
-                  countTicketVal.total == null ? const SizedBox(height: 20, width: 20, child: CircularProgressIndicator()) :
+                  countTicketVal.total == null  ?
+                  Text(
+                    "0", 
+                    style: GoogleFonts.poppins(
+                      fontSize: 15, 
+                      color: Colors.white,
+                    ),
+                  ) : 
+                  // ? const SizedBox(height: 20, width: 20, child: CircularProgressIndicator()) :
                   AnimatedFlipCounter(
                     value: countTicketVal.used![0].used!,
                     duration: const Duration(seconds: 1),
@@ -151,7 +171,8 @@ class RunWithSaiScreen extends StatelessWidget {
   Widget _buildEventCard(BuildContext context) {
     return Card(
       elevation: 10,
-      color: const Color.fromRGBO(130, 102, 224, 1 ),
+      // color: const Color.fromRGBO(553, 161, 218, 1),
+      color: const Color.fromARGB(255, 255, 255, 255),
       clipBehavior: Clip.antiAliasWithSaveLayer,
       child: InkWell(
         onTap: () {
@@ -161,7 +182,7 @@ class RunWithSaiScreen extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             Image.asset(
-              'assets/images/runcover.png',
+              'assets/images/branding-white.png',
               fit: BoxFit.cover,
             ),
             _buildEventDetails(context),
@@ -172,14 +193,17 @@ class RunWithSaiScreen extends StatelessWidget {
   }
 
   Widget _buildEventDetails(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(10.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          _buildEventInfo(),
-          _ticketCount(),
-        ],
+    return Container(
+      color: const Color.fromRGBO(553, 161, 218, 1),
+      child: Padding(
+        padding: const EdgeInsets.all(10.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            _buildEventInfo(),
+            _ticketCount(),
+          ],
+        ),
       ),
     );
   }
@@ -212,48 +236,50 @@ class RunWithSaiScreen extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text(
-          'Run With Sai',
+          'AnyTicket (Crew)',
           style: GoogleFonts.poppins(
             fontSize: 17,
             fontWeight: FontWeight.bold,
             color: Colors.white,
           ),
         ),
-        const SizedBox(height: 5),
-        Row(
-          children: [
-            const Icon(
-              LucideIcons.mapPin,
-              color: Colors.white,
-            ),
-            const SizedBox(width: 5),
-            Text(
-              'Kep City',
-              style: GoogleFonts.poppins(
-                fontSize: 15,
-                fontWeight: FontWeight.w500,
-                color: Colors.white,
-              ),
-            ),
-          ],
-        ),
+        // const SizedBox(height: 5),
+        // Row(
+        //   children: [
+        //     const Icon(
+        //       LucideIcons.mapPin,
+        //       color: Colors.white,
+        //     ),
+        //     const SizedBox(width: 5),
+        //     Text(
+        //       'Kep City',
+        //       style: GoogleFonts.poppins(
+        //         fontSize: 15,
+        //         fontWeight: FontWeight.w500,
+        //         color: Colors.white,
+        //       ),
+        //     ),
+        //   ],
+        // ),
       ],
     );
   }
 
   Widget _buildLogoutButton(BuildContext context) {
-    return ElevatedButtonCust(
-      tit: 'Log Out',
-      btnColor: const Color.fromARGB(255, 255, 255, 255),
-      textColor: const Color.fromARGB(255, 235, 53, 53),
-      iconColor: const Color.fromARGB(255, 255, 255, 255),
-      borderColor: const Color.fromRGBO(130, 102, 224, 0.5),
-      btnHigh: 50,
-      onNavigator: () {
-        SecureStorage.clearAllSecure().then((value) {
-          context.goNamed(RouterName.loginScreen);
-        });
-      },
+    return SafeArea(
+      child: ElevatedButtonCust(
+        tit: 'Log Out',
+        btnColor: const Color.fromARGB(255, 255, 255, 255),
+        textColor: const Color.fromARGB(255, 235, 53, 53),
+        iconColor: const Color.fromARGB(255, 255, 255, 255),
+        borderColor: const Color.fromRGBO(553, 161, 218, 1),
+        btnHigh: 50,
+        onNavigator: () {
+          SecureStorage.clearAllSecure().then((value) {
+            context.goNamed(RouterName.loginScreen);
+          });
+        },
+      ),
     );
   }
 }

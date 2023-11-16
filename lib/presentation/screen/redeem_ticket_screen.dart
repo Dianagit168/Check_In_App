@@ -15,9 +15,8 @@ class RedeemTicketScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    
     ticketUcImpl.setBuildContext = context;
-
-    // print("ticketUcImpl.jsonDataRedeem build ${ticketUcImpl.jsonDataRedeem}");
 
     return Scaffold(
       appBar: normalAppBar(context, titleAppbar: "Redeem Ticket"),
@@ -26,16 +25,21 @@ class RedeemTicketScreen extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(15.0),
-                child: Image.asset(
-                  'assets/images/runcover.png',
-                  fit: BoxFit.cover,
-                ),
-              ),
-            ),
+            // Padding(
+            //   padding: const EdgeInsets.all(10.0),
+            //   child: ClipRRect(
+            //     borderRadius: BorderRadius.circular(15.0),
+            //     child: SizedBox(
+            //       height: 250,
+            //       width: MediaQuery.of(context).size.width,
+            //       child: Image.asset(
+            //         'assets/images/background.png',
+            //         fit: BoxFit.cover,
+            //         alignment: Alignment.bottomCenter,
+            //       ),
+            //     ),
+            //   ),
+            // ),
             ticketModel.data!.isEmpty
                 ? _noDataFound()
                 : _ticketCard(context)
@@ -52,8 +56,8 @@ class RedeemTicketScreen extends StatelessWidget {
               child: HorizontalSlidableButton(
                 buttonWidth: 100.0,
                 height: 50,
-                color: const Color.fromRGBO(93, 84, 217, 0.2),
-                buttonColor: const Color.fromRGBO(93, 84, 217, 1),
+                color: const Color.fromRGBO(553, 161, 218, 0.2),
+                buttonColor: const Color.fromRGBO(553, 161, 218, 1),
                 dismissible: true,
                 label: const Center(child: Icon(LucideIcons.arrowRight, color: Colors.white)),
                 completeSlideAt: 0.8,
@@ -160,7 +164,7 @@ class RedeemTicketScreen extends StatelessWidget {
                         "Total: ${data.qty}/Redeemed: ${data.used}",
                         style: GoogleFonts.poppins(
                             fontSize: 15,
-                            color: const Color.fromRGBO(130, 102, 224, 1),
+                            color: const Color.fromRGBO(553, 161, 218, 1),
                             fontWeight: FontWeight.bold),
                       ),
                     ],
@@ -266,8 +270,8 @@ class RedeemTicketScreen extends StatelessWidget {
       },
       decoration: const QtyDecorationProps(
         isBordered: true,
-        btnColor: Color.fromRGBO(93, 84, 217, 1),
-        iconColor: Color.fromRGBO(93, 84, 217, 1),
+        btnColor: Color.fromRGBO(553, 161, 218, 1),
+        iconColor: Color.fromRGBO(553, 161, 218, 1),
         plusButtonConstrains: BoxConstraints(minWidth: 55),
         minusButtonConstrains: BoxConstraints(minWidth: 55),
         contentPadding: EdgeInsets.all(15),
@@ -280,7 +284,7 @@ class RedeemTicketScreen extends StatelessWidget {
         ),
         plusBtn: Icon(
           Icons.add_circle_sharp,
-          color: Color.fromRGBO(93, 84, 217, 1),
+          color: Color.fromRGBO(553, 161, 218, 1),
           size: 35,
         ),
       ),

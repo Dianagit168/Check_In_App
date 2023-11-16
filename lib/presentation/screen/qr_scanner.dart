@@ -130,7 +130,7 @@ class ScanQrScreenState extends State<ScanQrScreen> {
   Widget _buildPoweredByLogo() {
     return Align(
       alignment: Alignment.bottomCenter,
-      child: poweredByKoompiLogoWhite(),
+      child: poweredByKoompiLogoBlack(),
     );
   }
 
