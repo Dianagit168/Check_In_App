@@ -109,9 +109,10 @@ class MainScreen extends StatelessWidget {
       onPressed: () {
         context.pushNamed(RouterName.scanCameraScreen);
       },
-      backgroundColor: const Color.fromRGBO(553, 161, 218, 1),
+      // backgroundColor: const Color.fromRGBO(553, 161, 218, 1),
+      backgroundColor: Colors.transparent,
       tooltip: 'Scan QR',
-      elevation: 12,
+      elevation: 0,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
       splashColor: Colors.grey,
       child: const Icon(LucideIcons.camera, color: Colors.white, size: 50,),
